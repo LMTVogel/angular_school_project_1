@@ -1,11 +1,12 @@
 <div class="card mt-5" style="width: 18rem;">
     <div class="card-body">
-        <h5 class="card-title">{{user?.name}}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">Rol: {{user?.role}}</h6>
+        <h5 class="card-title">{{user!.name}}</h5>
         <p>
-            Naam: {{user?.name}}
+            Naam: {{user!.name}}
             <br/>
-            E-mail: {{user?.email}}
+            E-mail: {{user!.email}}
+            <br/>
+            Geboortedatum: {{user!.bday.toLocaleDateString()}}
         </p>
     </div>
 </div>

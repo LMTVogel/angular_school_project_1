@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { UserRole, User } from '../../models/user.model';
+import { User } from '../../models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,22 +10,27 @@ export class UserService {
     { id: 0,
       name: 'John Doe',
       email: 'johndoe@mail.com',
-      role: UserRole.admin,
+      bday: new Date('05/05/1990'),
     },
     { id: 1,
       name: 'Bert Doe',
       email: 'bertdoe@mail.com',
-      role: UserRole.guest,
+      bday: new Date('05/05/1990'),
     },
     { id: 2,
       name: 'Gert Arends',
       email: 'gert@mail.com',
-      role: UserRole.guest,
+      bday: new Date('05/05/1990'),
     },
     { id: 3,
       name: 'Pietje Puk',
       email: 'pietje@mail.com',
-      role: UserRole.guest,
+      bday: new Date('05/05/1990'),
+    },
+    { id: 4,
+      name: 'Klaas Vaak',
+      email: 'klaas@mail.com',
+      bday: new Date('05/05/1990'),
     },
   ];
 
@@ -39,13 +44,17 @@ export class UserService {
     return this.users.filter((user) => user.id === id)[0];
   }
 
-  editUser(id: number): void {
-    
+  addUser(user: User): void {
+    this.users.push(user);
+  }
+
+  editUser(user: User): void {
+    let userToEdit = this.users.findIndex((user) => user.id === user.id);
+    this.users[userToEdit] = user;
   }
 
   deleteUser(id: number): void {
     let userToDelete = this.users.findIndex((user) => user.id === id);
     this.users.splice(userToDelete, 1);
   }
-
 }
