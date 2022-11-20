@@ -21,13 +21,13 @@
                     <td>{{user.email}}</td>
                     <td>{{user.role}}</td>
                     <td>
-                        <button class="btn btn-info">Details</button>
+                        <button class="btn btn-info" [routerLink]="['/users', user.id]">Details</button>
                     </td>
                     <td>
                         <button class="btn btn-warning">Edit</button>
                     </td>
                     <td>
-                        <button class="btn btn-danger">Delete</button>
+                        <button (click)="deleteUser(user.id)" class="btn btn-danger">Delete</button>
                     </td>
                 </tr>
             </tbody>

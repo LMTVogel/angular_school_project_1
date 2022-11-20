@@ -44,7 +44,8 @@ export class UserService {
   }
 
   deleteUser(id: number): void {
-    
+    let userToDelete = this.users.findIndex((user) => user.id === id);
+    this.users.splice(userToDelete, 1);
   }
 
 }
