@@ -163,4 +163,9 @@ export class ConcertService {
   addConcert(concert: Concert): void {
     this.concerts.push(concert);
   }
+
+  deleteConcert(id: number): void {
+    let concertToDelete = this.concerts.findIndex((concert) => concert.id === id);
+    this.concerts.splice(concertToDelete, 1);
+  }
 }
