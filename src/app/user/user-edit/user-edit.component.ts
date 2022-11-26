@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 
-import { User } from '../shared/models/user.model';
-import { UserService } from '../shared/services/user/user.service';
+import { User } from '../../shared/models/user.model';
+import { UserService } from '../../shared/services/user/user.service';
 
 @Component({
   selector: 'app-user-edit',
