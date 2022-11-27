@@ -49,7 +49,7 @@ export class UserService {
   }
 
   editUser(user: User): void {
-    let userToEdit = this.users.findIndex((user) => user.id === user.id);
+    let userToEdit = this.users.findIndex((u) => u.id === user.id);
     this.users[userToEdit] = user;
   }
 

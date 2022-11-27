@@ -1,1 +1,36 @@
-<p>concert-list works!</p>
+<div class="row mt-1">
+    <div class="col-8">
+        <h1>Concerten</h1>
+        <a class="btn btn-primary" routerLink="new">Nieuw concert</a>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Naam</th>
+                    <th scope="col">Locatie</th>
+                    <th scope="col">Startdatum</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let concert of concerts; let i = index">
+                    <th scope="row">{{i + 1}}</th>
+                    <td>{{concert.name}}</td>
+                    <td>{{concert.location.name}}</td>
+                    <td>{{concert.startDateTime.toLocaleDateString()}}</td>
+                    <td>
+                        <button class="btn btn-info" [routerLink]="['/concerts', concert.id]">Details</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-warning" [routerLink]="['/concerts', concert.id, 'edit']">Edit</button>
+                    </td>
+                    <td>
+                        <button (click)="deleteConcert(concert.id)" class="btn btn-danger">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
