@@ -27,10 +27,11 @@
                 </p>
             </div>
             <div class="col-4">
+                <!-- check if bands is not empty -->
                 <b>Artiest(en):</b>
                 <ul>
                     <li *ngFor="let artist of concert!.artists">
-                        {{artist.name}}. Speelt met de band(s) <span *ngFor="let band of artist.bands">{{band.name}}</span>
+                        {{artist.name}}. <span *ngIf="artist.bands.length > 0">Speelt met de band(s) <span *ngFor="let band of artist.bands">{{band.name}}</span></span>
                     </li>
                 </ul>
             </div>
