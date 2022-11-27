@@ -1,3 +1,4 @@
+import { Time } from "@angular/common";
 import { Artist } from "./artist.model";
 import { EventLocation } from "./event-location.model";
 
