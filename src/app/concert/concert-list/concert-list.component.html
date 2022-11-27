@@ -7,8 +7,8 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Naam</th>
-                    <th scope="col">Locatie</th>
                     <th scope="col">Startdatum</th>
+                    <th scope="col">Min. leeftijd</th>
                     <th scope="col"></th>
                     <th scope="col"></th>
                     <th scope="col"></th>
@@ -18,8 +18,8 @@
                 <tr *ngFor="let concert of concerts; let i = index">
                     <th scope="row">{{i + 1}}</th>
                     <td>{{concert.name}}</td>
-                    <td>{{concert.location.name}}</td>
-                    <td>{{concert.startDateTime.toLocaleDateString()}}</td>
+                    <td>{{concert.startDate.toLocaleDateString()}}</td>
+                    <td>{{concert.minimumAge}}</td>
                     <td>
                         <button class="btn btn-info" [routerLink]="['/concerts', concert.id]">Details</button>
                     </td>

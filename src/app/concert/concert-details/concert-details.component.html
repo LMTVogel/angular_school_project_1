@@ -4,36 +4,14 @@
         <div class="row">
             <div class="col-4">
                 <p>
-                    Startdatum: {{concert!.startDateTime.toLocaleDateString()}}
+                    Concert: {{concert!.name}}
                     <br/>
-                    Starttijd: {{concert!.startDateTime.toLocaleTimeString()}}
+                    Startdatum: {{concert!.startDate.toLocaleDateString()}}
                     <br/>
                     Max. aantal tickets: {{concert!.maxTickets}}
                     <br/>
                     Minimum leeftijd: {{concert!.minimumAge}}
                 </p>
-            </div>
-            <div class="col-4">
-                <p>
-                    Locatienaam: {{concert!.location.name}}
-                    <br/>
-                    Adres: {{concert!.location.streetAddress}}
-                    <br/>
-                    Postcode: {{concert!.location.zipCode}}
-                    <br/>
-                    Stad: {{concert!.location.city}}
-                    <br/>
-                    Land: {{concert!.location.country}}
-                </p>
-            </div>
-            <div class="col-4">
-                <!-- check if bands is not empty -->
-                <b>Artiest(en):</b>
-                <ul>
-                    <li *ngFor="let artist of concert!.artists">
-                        {{artist.name}}. <span *ngIf="artist.bands.length > 0">Speelt met de band(s) <span *ngFor="let band of artist.bands">{{band.name}}</span></span>
-                    </li>
-                </ul>
             </div>
         </div>
     </div>

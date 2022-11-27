@@ -1,13 +1,7 @@
-import { Time } from "@angular/common";
-import { Artist } from "./artist.model";
-import { EventLocation } from "./event-location.model";
-
 export interface Concert {
     id: number;
     name: string;
-    startDateTime: Date;
+    startDate: Date;
     maxTickets: number;
     minimumAge: number;
-    location: EventLocation;
-    artists: Artist[];
 }
