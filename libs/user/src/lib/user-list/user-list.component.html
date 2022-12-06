@@ -21,13 +21,13 @@
                     <td>{{user.email}}</td>
                     <td>{{user.bday.toLocaleDateString()}}</td>
                     <td>
-                        <button class="btn btn-info" [routerLink]="['/users', user.id]">Details</button>
+                        <button class="btn btn-info" [routerLink]="['/users', user._id]">Details</button>
                     </td>
                     <td>
-                        <button class="btn btn-warning" [routerLink]="['/users', user.id, 'edit']">Edit</button>
+                        <button class="btn btn-warning" [routerLink]="['/users', user._id, 'edit']">Edit</button>
                     </td>
                     <td>
-                        <button (click)="deleteUser(user.id)" class="btn btn-danger">Delete</button>
+                        <button (click)="deleteUser(user._id)" class="btn btn-danger">Delete</button>
                     </td>
                 </tr>
             </tbody>

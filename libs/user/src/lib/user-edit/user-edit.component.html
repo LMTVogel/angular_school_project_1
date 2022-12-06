@@ -1,7 +1,7 @@
 <h1 *ngIf="!isEditting" class="mt-5">User aanmaken</h1>
 <h1 *ngIf="isEditting" class="mt-5">User aanpassen</h1>
 
-<form #userForm="ngForm" (ngSubmit)="userForm.form.valid && onSubmit(userForm)">
+<!-- <form #userForm="ngForm" (ngSubmit)="userForm.form.valid && onSubmit(userForm)">
     <input *ngIf="isEditting" type="hidden" id="id" name="id" [(ngModel)]="user!.id">
     <div class="mb-3">
         <label for="name" class="form-label">Naam</label>
@@ -19,4 +19,4 @@
             required type="text" class="form-control" id="bday" name="bday" aria-describedby="bdayHelp">
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+</form> -->

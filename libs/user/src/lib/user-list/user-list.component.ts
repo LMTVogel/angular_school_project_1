@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { User, UserService } from '@angular-concert-project/user';
+import { User, UserHttpService } from '@angular-concert-project/user';
 
 @Component({
   selector: 'angular-concert-project-user-list',
@@ -10,13 +10,15 @@ import { User, UserService } from '@angular-concert-project/user';
 export class UserListComponent implements OnInit {
   users: User[] = [];
 
-  constructor(private userService: UserService) { }
+  constructor(private userHttpService: UserHttpService) { }
 
   ngOnInit(): void {
-    this.users = this.userService.getUsers();
+    this.userHttpService.getAll().subscribe(users => this.users = users);
+
+    console.log(this.users);
   }
 
-  deleteUser(id: number): void {
-    this.userService.deleteUser(id);
+  deleteUser(id: string): void {
+    throw new Error('Method not implemented.');
   }
 }

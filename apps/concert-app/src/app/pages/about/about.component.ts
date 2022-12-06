@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {User, UserHttpService} from '@angular-concert-project/user';
 
 @Component({
   selector: 'angular-concert-project-about',
