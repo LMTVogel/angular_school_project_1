@@ -9,7 +9,11 @@ import { Observable } from "rxjs";
 export class UserHttpService {
     constructor(private http: HttpClient) {}
 
-    getAll(): Observable<User[]> {
+    getAllUsers(): Observable<User[]> {
         return this.http.get<User[]>('http://localhost:3333/api/users/');
+    }
+
+    getUserById(id: string): Observable<User> {
+        return this.http.get<User>(`http://localhost:3333/api/users/${id}`);
     }
 }
