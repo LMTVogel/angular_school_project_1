@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { DataModule } from './data.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { RouterModule } from '@nestjs/core';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -10,9 +11,14 @@ import { RouterModule } from '@nestjs/core';
       {
         path: 'api',
         module: DataModule,
+      },
+      {
+        path: 'auth',
+        module: AuthModule,
       }
     ]),
     DataModule,
+    AuthModule
   ],
 })
 export class AppModule {}
