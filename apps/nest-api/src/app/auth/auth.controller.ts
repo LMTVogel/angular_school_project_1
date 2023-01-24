@@ -13,12 +13,12 @@ export class AuthController {
     async register(@Body() credentials: any): Promise<ResourceId> {
         try {
             await this.authService.registerUser(credentials.email, credentials.password);
-    
+
             return {
                 id: await this.authService.createUser(credentials.name, credentials.email, credentials.bday),
             };
         } catch (e) {
-            throw new HttpException('Email ongeldig', HttpStatus.BAD_REQUEST);
+            throw new HttpException('Email bestaat al', HttpStatus.BAD_REQUEST);
         }
     }
 
