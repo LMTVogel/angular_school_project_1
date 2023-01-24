@@ -27,6 +27,12 @@ export class User {
         type: MongooseSchema.Types.Date
     })
     bday!: MongooseSchema.Types.Date;
+
+    @Prop({
+        required: true,
+        default: false,
+    })
+    isAdmin!: boolean;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

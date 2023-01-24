@@ -1,0 +1,27 @@
+<form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+    <div class="mb-3">
+        <input
+        placeholder="Email"
+        type="email"
+        class="form-control"
+        id="email"
+        name="email"
+        #email="ngModel"
+        [(ngModel)]=""
+        />
+    </div>
+    <div class="mb-3">
+        <input
+        placeholder="Password"
+        type="password"
+        class="form-control"
+        id="password"
+        name="password"
+        #password="ngModel"
+        [(ngModel)]="user!.password"
+        />
+    </div>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Log in</button>
+    </div>
+</form>
