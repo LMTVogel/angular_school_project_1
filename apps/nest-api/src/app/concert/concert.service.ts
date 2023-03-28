@@ -26,4 +26,14 @@ export class ConcertService {
   async getConcerts(): Promise<Concert[]> {
     return await this.concertModel.find();
   }
+
+  async deleteConcert(id: string): Promise<Concert> {
+    const concert = await this.concertModel.findOneAndDelete({ id: id });
+
+    if (concert == null) {
+      throw new HttpException('Concert not found', HttpStatus.NOT_FOUND);
+    }
+
+    return concert;
+  }
 }
