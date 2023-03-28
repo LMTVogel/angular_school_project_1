@@ -1,9 +1,8 @@
-import { UserCredentials } from '@angular-concert-project/user';
+import {User, UserCredentials} from '@angular-concert-project/user';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '@angular-concert-project/auth-ui';
 import { Router } from '@angular/router';
-import { Token } from '@angular/compiler';
+import {UserService} from "../../../../user/src/lib/user.service";
 
 @Component({
   selector: 'angular-concert-project-login',
@@ -12,9 +11,12 @@ import { Token } from '@angular/compiler';
 })
 export class LoginComponent implements OnInit {
   user!: UserCredentials;
+  wrongLogin = false;
+  userLoggedIn: boolean = false;
 
   constructor(
     private authService: AuthService,
+    private userService: UserService,
     private router: Router) {}
 
   ngOnInit() {
@@ -25,16 +27,21 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.authService.login(this.user).subscribe((token: Token) => {
-      if (token) {
-        console.log("Login successful");
-        localStorage.setItem("token", JSON.stringify(token) || '');
-        this.userService.getSelf.subscribe((user) => {
-          console.log(user);
-          localStorage.setItem("user", JSON.stringify(user) || '');
-          localStorage.setItem("token", JSON.stringify(token) || '');
-      });
-      this.authService.loginStatus = true;
-      this.router.navigate(['']);
+    console.log('Login form submitted');
+    this.authService.login(this.user).subscribe((result: any | undefined) => {
+      if (result.error) {
+        this.wrongLogin = true;
+      } else {
+        console.log('User login successful');
+        this.wrongLogin = false;
+        localStorage.setItem('token', JSON.stringify(result.token) || '');
+        this.userService.getLoggedInUser().subscribe((user: User) => {
+          localStorage.setItem('user', JSON.stringify(user));
+        });
+
+        this.authService.setLoggedInStatus = true;
+        this.router.navigate(['']);
+      }
+    });
   }
 }

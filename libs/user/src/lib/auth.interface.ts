@@ -3,6 +3,12 @@ export interface UserCredentials {
     password: string;
 }
 
+export interface IdentityModel {
+  email: string,
+  oldPassword: string,
+  newPassword: string,
+}
+
 export interface UserRegistration extends UserCredentials {
     name: string;
     bday: Date;

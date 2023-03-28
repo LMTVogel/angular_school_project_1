@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { User, UserHttpService } from '@angular-concert-project/user';
+import { User } from '@angular-concert-project/user';
+import {UserService} from "../user.service";
 
 @Component({
   selector: 'angular-concert-project-user-list',
@@ -10,10 +11,10 @@ import { User, UserHttpService } from '@angular-concert-project/user';
 export class UserListComponent implements OnInit {
   users: User[] = [];
 
-  constructor(private userHttpService: UserHttpService) { }
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
-    this.userHttpService.getAllUsers().subscribe(users => this.users = users);
+    this.userService.getAllUsers().subscribe(users => this.users = users);
 
     console.log(this.users);
   }

@@ -42,12 +42,16 @@ export class AuthService {
     async generateToken(email: string, password: string): Promise<string> {
         const identity = await this.identityModel.findOne({email});
 
-        if (!identity || !(await compare(password, identity.hash))) throw new Error("user not authorized");
+        if (!identity || !(await compare(password, identity.hash)))
+          throw new Error("user not authorized");
 
         const user = await this.userModel.findOne({email: email});
 
         return new Promise((resolve, reject) => {
-            sign({email, id: user.id}, process.env.JWT_SECRET, (err: Error, token: string) => {
+            sign(
+              {email, id: user.id},
+              process.env.JWT_SECRET,
+              (err: Error, token: string) => {
                 if (err) reject(err);
                 else resolve(token);
             });

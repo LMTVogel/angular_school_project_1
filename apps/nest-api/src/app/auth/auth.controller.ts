@@ -7,7 +7,6 @@ import { AuthService } from './auth.service';
 @Controller()
 export class AuthController {
     constructor(private readonly authService: AuthService) {}
-
     @Post('register')
     // credentials: any is a workaround for the following error: credentials: UserRegistration causes error.
     async register(@Body() credentials: any): Promise<ResourceId> {
