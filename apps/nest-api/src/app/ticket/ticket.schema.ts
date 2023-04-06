@@ -1,8 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Schema as MongooseSchema } from 'mongoose';
 import { v4 as uuid } from 'uuid';
-import {Concert} from "./concert.schema";
-import {User} from "../../user/user.schema";
+import {Concert} from "../concert/schemas/concert.schema";
+import {User} from "../user/user.schema";
 
 export type TicketDocument = Ticket & Document;
 
@@ -30,7 +30,6 @@ export class Ticket {
       ref: 'User'
     })
     user!: User;
-
-    // Misschien dat ik hier de datum nog neer moet zetten. Maar we kunnen hem ook gewoon
-    // uit het concert schema halen.
 }
+
+export const TicketSchema = SchemaFactory.createForClass(Ticket);

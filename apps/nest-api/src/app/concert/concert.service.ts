@@ -27,6 +27,10 @@ export class ConcertService {
     return await this.concertModel.find();
   }
 
+  async getConcertById(id: string): Promise<Concert> {
+    return await this.concertModel.findOne({ id: id });
+  }
+
   async deleteConcert(id: string): Promise<Concert> {
     const concert = await this.concertModel.findOneAndDelete({ id: id });
 
@@ -35,5 +39,9 @@ export class ConcertService {
     }
 
     return concert;
+  }
+
+  async updateConcert(id: string, concert: Concert): Promise<Concert> {
+    return await this.concertModel.findOneAndUpdate({ id: id }, concert, { new: true });
   }
 }
