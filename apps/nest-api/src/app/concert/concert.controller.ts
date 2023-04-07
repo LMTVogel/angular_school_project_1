@@ -15,6 +15,11 @@ export class ConcertController {
     return await this.concertService.getConcerts();
   }
 
+  @Get(':id')
+  async getConcertById(@Param('id') id: string): Promise<Concert> {
+    return await this.concertService.getConcertById(id);
+  }
+
   @Post()
   // TODO: add guards for auth
   async createConcert(@Body() concert: Concert): Promise<Concert> {

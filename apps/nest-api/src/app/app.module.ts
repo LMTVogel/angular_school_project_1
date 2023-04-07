@@ -38,7 +38,8 @@ export class AppModule {
       .exclude(
         { path: '/auth/login', method: RequestMethod.POST },
         { path: '/auth/register', method: RequestMethod.POST },
-        { path: '/api/concerts', method: RequestMethod.GET }
+        { path: '/api/concerts', method: RequestMethod.GET },
+        { path: '/api/concerts/:id', method: RequestMethod.GET },
         )
 			.forRoutes('*');
 	}
