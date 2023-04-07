@@ -16,8 +16,8 @@ export class AuthService {
         @InjectModel(User.name) private userModel: Model<UserDocument>
     ) {}
 
-    async createUser(name: string, email: string, bday: Date): Promise<string> {
-        const user = new this.userModel({name, email, bday});
+    async createUser(name: string, email: string, bday: Date, isAdmin: boolean): Promise<string> {
+        const user = new this.userModel({name, email, bday, isAdmin});
         await user.save();
         return user.id;
       }

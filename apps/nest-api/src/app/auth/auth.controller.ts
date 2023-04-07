@@ -14,7 +14,7 @@ export class AuthController {
             await this.authService.registerUser(credentials.email, credentials.password);
 
             return {
-                id: await this.authService.createUser(credentials.name, credentials.email, credentials.bday),
+                id: await this.authService.createUser(credentials.name, credentials.email, credentials.bday, credentials.isAdmin),
             };
         } catch (e) {
             throw new HttpException('Email bestaat al', HttpStatus.BAD_REQUEST);
