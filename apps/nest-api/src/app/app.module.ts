@@ -1,9 +1,10 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { DataModule } from './data.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { RouterModule } from '@nestjs/core';
 import { AuthModule } from './auth/auth.module';
 import {Neo4jModule} from "./neo4j/neo4j.module";
+import { TokenMiddleware } from './auth/token.middleware';
 
 @Module({
   imports: [
@@ -29,4 +30,16 @@ import {Neo4jModule} from "./neo4j/neo4j.module";
     AuthModule
   ],
 })
-export class AppModule {}
+
+export class AppModule {
+	configure(consumer: MiddlewareConsumer) {
+		consumer
+			.apply(TokenMiddleware)
+      .exclude(
+        { path: '/auth/login', method: RequestMethod.POST },
+        { path: '/auth/register', method: RequestMethod.POST },
+        { path: '/api/concerts', method: RequestMethod.GET }
+        )
+			.forRoutes('*');
+	}
+}

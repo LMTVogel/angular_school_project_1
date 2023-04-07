@@ -12,26 +12,16 @@ export class UserService {
     }
 
     async getUserById(id: string): Promise<UserModel> {
-      return this.userModel.findOne({ id: id });
+        return this.userModel.findOne({ id: id });
     }
-
-    // async addUser(userId: string, changes: Partial<User>): Promise<User> {
-    //     return this.userModel.updateOne({ _id: userId }, changes);
-    // }
 
     async updateUser(incomingUser: UserModel): Promise<UserModel> {
-        const user = await this.userModel.findOne({ id: incomingUser.id });
-        const updatedUser = await this.userModel.updateOne({ id: user[0].id },
-            [
-                {
-                    $set: {
-                        name: incomingUser.name,
-                        email: incomingUser.email,
-                        bday: incomingUser.bday
-                    }
-                }
-            ]);
-        return user[0];
+        const user = await this.userModel.findOneAndUpdate(
+            { id: incomingUser.id }, 
+            { name: incomingUser.name },
+            { new: true }
+        );
+        
+        return user;
     }
-
 }
