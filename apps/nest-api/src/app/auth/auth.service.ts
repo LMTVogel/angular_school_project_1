@@ -22,7 +22,7 @@ export class AuthService {
         return user.id;
       }
 
-    async verifyToken(token: string): Promise<string | JwtPayload> {
+    async verifyToken(token: string): Promise<any> {
         return new Promise((resolve, reject) => {
             verify(token, process.env.JWT_SECRET, (err, payload) => {
                 if (err) reject(err);
