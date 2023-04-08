@@ -21,7 +21,7 @@ export class TicketService {
     }
 
     async createTicket(
-        token: string,
+        id: string,
         ticket: Ticket,
     ):Promise<Ticket> {
         if (!ticket.concert) throw new HttpException('Concert is required', HttpStatus.BAD_REQUEST);
@@ -30,7 +30,7 @@ export class TicketService {
 
         if (await this.isConcertSoldOut(concert)) throw new HttpException('Concert is sold out', HttpStatus.BAD_REQUEST);
 
-        const user = await this.userService.getUserById(token);
+        const user = await this.userService.getUserById(id);
         const newTicket = new this.ticketModel({ ...ticket, concert: concert, user: user });
 
         await newTicket.save().catch((err) => {

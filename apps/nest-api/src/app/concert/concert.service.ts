@@ -1,6 +1,7 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, UseGuards } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { AdminGuard } from '../roles/roles.guard';
 import {Concert, ConcertDocument} from "./schemas/concert.schema";
 
 @Injectable()
@@ -10,6 +11,7 @@ export class ConcertService {
     private concertModel: Model<ConcertDocument>,
   ) {}
 
+  @UseGuards(AdminGuard)
   async createConcert(
     concert: Concert,
   ):Promise<Concert> {
@@ -31,6 +33,7 @@ export class ConcertService {
     return await this.concertModel.findOne({ id: id });
   }
 
+  @UseGuards(AdminGuard)
   async deleteConcert(id: string): Promise<Concert> {
     const concert = await this.concertModel.findOneAndDelete({ id: id });
 
@@ -41,6 +44,7 @@ export class ConcertService {
     return concert;
   }
 
+  @UseGuards(AdminGuard)
   async updateConcert(id: string, concert: Concert): Promise<Concert> {
     return await this.concertModel.findOneAndUpdate({ id: id }, concert, { new: true });
   }

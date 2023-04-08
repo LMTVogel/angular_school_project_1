@@ -1,9 +1,8 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 
-import { Id } from '@angular-concert-project/user';
 
 export interface Token {
-  username: Id,
+  email: string,
   id: string,
 }
 

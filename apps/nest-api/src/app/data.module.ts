@@ -9,13 +9,16 @@ import {ConcertService} from "./concert/concert.service";
 import { TicketController } from "./ticket/ticket.controller";
 import { TicketService } from "./ticket/ticket.service";
 import { Ticket, TicketSchema } from "./ticket/ticket.schema";
+import { Identity, IdentitySchema } from "./auth/identity.schema";
+import { AuthService } from "./auth/auth.service";
 
 @Module({
     imports: [
         MongooseModule.forFeature([
+            { name: Identity.name, schema: IdentitySchema },
             { name: User.name, schema: UserSchema },
             { name: Concert.name, schema: ConcertSchema },
-            { name: Ticket.name, schema: TicketSchema }
+            { name: Ticket.name, schema: TicketSchema },
         ]),
     ],
     controllers: [
@@ -24,6 +27,12 @@ import { Ticket, TicketSchema } from "./ticket/ticket.schema";
         TicketController
     ],
     providers: [
+        AuthService,
+        UserService,
+        ConcertService,
+        TicketService
+    ],
+    exports: [
         UserService,
         ConcertService,
         TicketService
