@@ -4,8 +4,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { UserDetailsComponent, UserEditComponent, UserListComponent } from '@angular-concert-project/user';
 import { AboutComponent } from './pages/about/about.component';
 import { ConcertListComponent, ConcertDetailsComponent, ConcertEditComponent } from '@angular-concert-project/concert';
+import { LoginPageComponent } from './auth/login/login.component';
 
 const routes: Routes = [
+  { path: 'login', pathMatch: 'full', component: LoginPageComponent },
+
   { path: '', pathMatch: 'full', component: AboutComponent },
   { path: 'about', pathMatch: 'full', component: AboutComponent },
   { path: 'users', pathMatch: 'full', component: UserListComponent },
@@ -17,6 +20,7 @@ const routes: Routes = [
   { path: 'concerts/new', pathMatch: 'full', component: ConcertEditComponent },
   { path: 'concerts/:id', pathMatch: 'full', component: ConcertDetailsComponent },
   { path: 'concerts/:id/edit', pathMatch: 'full', component: ConcertEditComponent },
+
 ];
 
 @NgModule({
