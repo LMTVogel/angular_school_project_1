@@ -51,9 +51,9 @@ export class ConcertService {
     return await this.concertModel.findOneAndUpdate({ id: id }, concert, { new: true });
   }
 
-  async recommendConcerts(): Promise<Concert[]> {
+  async recommendConcerts(id: string): Promise<Concert[]> {
     const concerts = [] as Concert[];
-    const recommendQuery = await this.neo4jService.singleRead(`MATCH (user1:User)-[:HAS_BOUGHT]->(:Ticket)-[:FOR]->(concert:Concert)<-[:FOR]-(:Ticket)<-[:HAS_BOUGHT]-(user2:User)-[:HAS_BOUGHT]->(:Ticket)-[:FOR]->(otherConcert:Concert)
+    const recommendQuery = await this.neo4jService.singleRead(`MATCH (user1:User { id: '${id}' })-[:HAS_BOUGHT]->(:Ticket)-[:FOR]->(concert:Concert)<-[:FOR]-(:Ticket)<-[:HAS_BOUGHT]-(user2:User)-[:HAS_BOUGHT]->(:Ticket)-[:FOR]->(otherConcert:Concert)
     WHERE NOT (user1)-[:HAS_BOUGHT]->(:Ticket)-[:FOR]->(otherConcert)
     AND NOT otherConcert = concert
     RETURN otherConcert`);

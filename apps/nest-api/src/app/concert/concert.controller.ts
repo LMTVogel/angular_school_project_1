@@ -6,6 +6,7 @@ import { Delete, Param, Put, UseGuards } from '@nestjs/common/decorators';
 import { ConcertService } from './concert.service';
 import { Concert } from './schemas/concert.schema';
 import { AdminGuard } from '../roles/roles.guard';
+import { Token, InjectToken } from '../auth/token.decorator';
 
 @Controller('concerts')
 export class ConcertController {
@@ -16,9 +17,10 @@ export class ConcertController {
     return await this.concertService.getConcerts();
   }
 
-  @Get('recommend')
-  async recommendConcerts(): Promise<Concert[]> {
-    return await this.concertService.recommendConcerts();
+  @Get('neo/recommend')
+  async recommendConcerts(@InjectToken() token: Token): Promise<Concert[]> {
+    console.log(token);
+    return await this.concertService.recommendConcerts(token.id);
   }
 
   @Get(':id')
