@@ -3,12 +3,14 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { AdminGuard } from '../roles/roles.guard';
 import {Concert, ConcertDocument} from "./schemas/concert.schema";
+import { Neo4jService } from '../neo4j/neo4j.service';
 
 @Injectable()
 export class ConcertService {
   constructor(
     @InjectModel(Concert.name)
     private concertModel: Model<ConcertDocument>,
+    private neo4jService: Neo4jService,
   ) {}
 
   @UseGuards(AdminGuard)
@@ -47,5 +49,22 @@ export class ConcertService {
   @UseGuards(AdminGuard)
   async updateConcert(id: string, concert: Concert): Promise<Concert> {
     return await this.concertModel.findOneAndUpdate({ id: id }, concert, { new: true });
+  }
+
+  async recommendConcerts(id: string): Promise<Concert[]> {
+    const concerts = [] as Concert[];
+    const recommendQuery = await this.neo4jService.singleRead(`MATCH (user1:User { id: '${id}' })-[:HAS_BOUGHT]->(:Ticket)-[:FOR]->(concert:Concert)<-[:FOR]-(:Ticket)<-[:HAS_BOUGHT]-(user2:User)-[:HAS_BOUGHT]->(:Ticket)-[:FOR]->(otherConcert:Concert)
+    WHERE NOT (user1)-[:HAS_BOUGHT]->(:Ticket)-[:FOR]->(otherConcert)
+    AND NOT otherConcert = concert
+    RETURN otherConcert`);
+
+    for (const concert of recommendQuery.records) {
+      console.log(concert);
+      const concertId = concert.get('otherConcert').properties.id;
+      const concertObject = await this.getConcertById(concertId);
+      concerts.push(concertObject);
+    }
+    
+    return concerts;
   }
 }

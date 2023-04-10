@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
 import { v4 as uuid } from 'uuid';
 
-export type ConcertDocument = Band & Document;
+export type BandDocument = Band & Document;
 
 @Schema()
 export class Band {

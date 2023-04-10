@@ -11,7 +11,8 @@ export class TicketController {
     constructor(private readonly ticketService: TicketService) {}
 
     @Get()
-    async getTicketsFromUserId(@InjectToken() token: Token) {
+    async getTicketsFromUserId(@InjectToken() token: Token): Promise<Ticket[]> {
+        console.log(token);
         return await this.ticketService.getTicketsFromUserId(token.id);
     }
 

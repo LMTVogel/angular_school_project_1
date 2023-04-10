@@ -22,7 +22,6 @@ export class Concert {
 
     @Prop({
         required: true,
-        default: Date.now,
         type: MongooseSchema.Types.Date
     })
     startDate!: MongooseSchema.Types.Date;
@@ -34,19 +33,17 @@ export class Concert {
 
     @Prop({
         required: true,
-        default: false,
     })
     minimumAge!: number;
 
     @Prop({
         required: true,
-        default: false,
+        default: [],
     })
     artists: Artist[];
 
     @Prop({
         required: true,
-        default: false,
     })
     location!: ConcertLocation;
 }

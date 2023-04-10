@@ -2,20 +2,15 @@ import {Controller, Get, Post, Put, Delete, Param, Body, HttpException, HttpStat
 import { UserService } from './user.service';
 import { User as UserModel } from './user.schema';
 import { InjectToken, Token } from '../auth/token.decorator';
-import {Neo4jService} from "../neo4j/neo4j.service";
 import { AdminGuard } from '../roles/roles.guard';
 
 @Controller('users')
 export class UserController {
-    constructor(private userService: UserService, private neo4jService: Neo4jService) {}
+    constructor(private userService: UserService) {}
 
     @UseGuards(AdminGuard)
     @Get()
     async getAll(): Promise<UserModel[]> {
-        // const data = await this.neo4jService.singleRead('MATCH (n) RETURN n LIMIT 25');
-        // data.records.forEach(record => {
-        //     console.log(record.get('n'));
-        // });
         return this.userService.getAll();
     }
 
