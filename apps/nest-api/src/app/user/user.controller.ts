@@ -12,10 +12,6 @@ export class UserController {
     @UseGuards(AdminGuard)
     @Get()
     async getAll(): Promise<UserModel[]> {
-        // const data = await this.neo4jService.singleRead('MATCH (n) RETURN n LIMIT 25');
-        // data.records.forEach(record => {
-        //     console.log(record.get('n'));
-        // });
         return this.userService.getAll();
     }
 
