@@ -24,9 +24,8 @@ export class User {
     @Prop({
         required: true,
         default: Date.now,
-        type: MongooseSchema.Types.Date
     })
-    bday!: MongooseSchema.Types.Date;
+    bday!: Date;
 
     @Prop({
         required: true,
