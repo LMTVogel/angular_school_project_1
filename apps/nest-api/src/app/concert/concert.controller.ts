@@ -16,6 +16,11 @@ export class ConcertController {
     return await this.concertService.getConcerts();
   }
 
+  @Get('recommend')
+  async recommendConcerts(): Promise<Concert[]> {
+    return await this.concertService.recommendConcerts();
+  }
+
   @Get(':id')
   async getConcertById(@Param('id') id: string): Promise<Concert> {
     return await this.concertService.getConcertById(id);
