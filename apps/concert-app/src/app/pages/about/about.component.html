@@ -2,19 +2,20 @@
 
 <div class="row">
     <div class="col-6">
-        <h5>Casusbeschrijving</h5>
-        <p>Uiteindelijk moet dit een website worden waar je als gebruiker concerten kan zien en dan kun je hier een kaartje voor kopen. Je kan dan zien waar het zich afspeelt en wie er komen optreden. Gebruikers mogen alleen hun eigen kaartjes inzien. Ook moet er een administrator account komen die uiteindelijk CRUD kan toepassen op de concert entiteiten zodat dit goed beheert kan worden. 
-        <br/>
-        <br/>
-        Verdere user stories die gerealiseerd kunnen worden zijn:</p>
-        <ul>
-            <li>Van een concert willen we kunnen zien wat de totale opbrengst is.</li>
-            <li>Als een andere user drie keer of meer naar dezelfde artiest is geweest als jij dan komt jullie interesse overeen. Dan krijg je concerten van een artiest te zien waar die overeenkomende user tickets voor heeft waar jij nog niet naartoe bent geweest. Er is dus een kans dat je daar ook naartoe wil i.v.m. de interesse dus dan wordt dat concert aangeraden waar die nieuwe artiest speelt.</li>
-        </ul>
+        <h5>Casusbeschrijving en functionaliteiten</h5>
+        <p>
+            Uiteindelijk moet dit een website worden waar je als gebruiker concerten kan zien en dan kun je hier een kaartje voor kopen. Je kan dan zien waar het zich afspeelt en wie er komen optreden. Functionaliteiten:
+            User mag alleen zijn eigen gekochte kaartjes inzien. User mag wel alle concerten zien en daar een kaartje voor aanschaffen. User moet details van een concert kunnen zien. User moet zijn eigen aangeschafte kaartjes in kunnen zien. User moet kunnen inloggen en user moet kunnen registreren uiteraard.
+            <br/>
+            <br/>
+            Admin moet CRUD functionaliteiten hebben op alle concerten. Admin moet ook alle users op kunnen vragen.
+            <br/>
+            <br/>
+            Als user1 een kaartje heeft voor concert1 en user2 heeft ook een kaartje voor concert1 heeft, dan hebben ze waarschijnlijk dezelfde interesse. User2 heeft ook een kaartje voor een ander concert en waarschijnlijk vindt user1 dit ook interessant. Daarom gaan we dit aan user1 aanraden omdat ze misschien overeenkomende interesse hebben. 
     </div>
     <div class="col-6">
         <h5>Entiteitsrelaties</h5>
-        <p>Een user mag meerdere tickets aanschaffen. Een ticket kan maar bij 1 user horen. Een concert heeft meerdere tickets en vindt plaats op 1 locatie. Op dit concert zijn 1 of meerdere artiesten die optreden. Een artiest kan bij nul of meerdere bands zitten en een band heeft meerdere artiesten. Nog een kleine verduidelijking voor de ticketentiteit; deze heeft een TicketType wat bijvoorbeeld VIP of regular kan betekenen.</p>
+        <p>Een user mag meerdere tickets aanschaffen. Een ticket kan maar bij 1 user horen. Concert heeft meerdere tickets en vindt plaats op 1 locatie. Op dit concert zijn 1 of meerdere artiesten die optreden. Een artiest kan bij nul of 1 band zitten en een band heeft meerdere artiesten.</p>
     </div>
-    <img src="../../assets/img/erd.png" alt="ERD afbeelding">
+    <img src="../../../assets/erd.jpeg" alt="ERD afbeelding">
 </div>
