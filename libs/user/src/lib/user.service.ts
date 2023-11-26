@@ -37,6 +37,11 @@ export class UserService {
     this.users.push(user);
   }
 
+  editUser(user: User): void {
+    const userToEdit = this.users.findIndex((u) => u.id === user.id);
+    this.users[userToEdit] = user;
+  }
+
   getToken(): string {
     return JSON.parse(localStorage.getItem('token') || '');
   }
