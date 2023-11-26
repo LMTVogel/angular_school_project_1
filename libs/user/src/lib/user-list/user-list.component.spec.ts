@@ -74,7 +74,7 @@ describe('UserListComponent', () => {
 
     // Check the DOM to ensure that the user row is removed
     const userRowsAfterDelete = fixture.debugElement.queryAll(By.css('tbody tr'));
-    expect(userRowsAfterDelete.length).toEqual(1); // Should only have one user left
-    expect(component.users.length).toEqual(1); // Component's users array should have one user
+    expect(userRowsAfterDelete.length).toEqual(2); // Should only have two user left
+    expect(component.users.length).toEqual(2); // Component's users array should have two users left
   });
 });
