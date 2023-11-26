@@ -21,6 +21,6 @@ export class UserListComponent implements OnInit {
   }
 
   deleteUser(id: string): void {
-    throw new Error('Method not implemented.');
+    this.userService.deleteUser(id);
   }
 }

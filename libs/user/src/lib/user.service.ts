@@ -42,6 +42,11 @@ export class UserService {
     this.users[userToEdit] = user;
   }
 
+  deleteUser(id: string): void {
+    const userToDelete = this.users.findIndex((user) => user.id === id);
+    this.users.splice(userToDelete, 1);
+  }
+
   getToken(): string {
     return JSON.parse(localStorage.getItem('token') || '');
   }
