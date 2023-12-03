@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http"
 import { catchError, Observable, of, BehaviorSubject } from "rxjs";
-import {UserCredentials} from "@angular-concert-project/user";
+import { UserCredentials } from "./auth.interface";
+import {User} from "@angular-concert-project/user";
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +14,9 @@ export class AuthService {
     this.loggedIn.next(status);
   }
 
-
   constructor(private httpClient: HttpClient) { }
 
-  private url = 'http://localhost:3333/auth';
+  private url = 'https://angularschoolproject1-production.up.railway.app/auth';
 
   getToken(): string {
     return JSON.parse(localStorage.getItem('token') || '');
@@ -71,5 +71,19 @@ export class AuthService {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     return false;
+  }
+
+  getLoggedInUser(): Observable<User> {
+    console.log('get logged in user');
+
+    const token = this.getToken();
+    const headers = new HttpHeaders({
+      'Access-Control-Allow-Origin': '*',
+      Authorization: `${token}`,
+    });
+
+    return this.httpClient.get<User>(this.url + "/info", {
+      headers: headers,
+    })
   }
 }

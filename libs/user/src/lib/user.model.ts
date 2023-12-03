@@ -1,7 +1,7 @@
 export interface User {
-    id: string;
-    name: string;
-    email: string;
-    bday: Date;
-    isAdmin: boolean;
+  id: string;
+  name: string;
+  email: string;
+  bday: Date;
+  isAdmin: boolean;
 }

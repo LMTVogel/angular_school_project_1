@@ -1,6 +1,6 @@
 export interface UserCredentials {
-    email: string;
-    password: string;
+  email: string;
+  password: string;
 }
 
 export interface IdentityModel {
@@ -10,10 +10,10 @@ export interface IdentityModel {
 }
 
 export interface UserRegistration extends UserCredentials {
-    name: string;
-    bday: Date;
+  name: string;
+  bday: Date;
 }
 
 export interface Token {
-    token: string;
+  token: string;
 }

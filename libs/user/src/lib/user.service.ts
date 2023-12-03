@@ -1,16 +1,17 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { catchError, Observable, of } from "rxjs";
-import {AuthService} from "@angular-concert-project/auth-ui";
-import {User} from "@angular-concert-project/user";
+import { User } from "@angular-concert-project/user";
+import { AuthService } from "@angular-concert-project/auth-ui";
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private url = 'http://localhost:3333/api/user';
+  private url = 'https://angularschoolproject1-production.up.railway.app/api/user';
 
-  constructor(private httpClient: HttpClient, private readonly authService: AuthService) { }
+  constructor(private httpClient: HttpClient, private authService: AuthService) { }
 
   users: User[] = [
     { id: '1', name: 'Alice Smith', email: 'alice@example.com', bday: new Date('1990-01-01'), isAdmin: true },
@@ -47,10 +48,6 @@ export class UserService {
     this.users.splice(userToDelete, 1);
   }
 
-  getToken(): string {
-    return JSON.parse(localStorage.getItem('token') || '');
-  }
-
   // getAllUsers(): Observable<User[]> {
   //   const token = this.getToken();
   //   const headers = new HttpHeaders({
@@ -84,18 +81,4 @@ export class UserService {
   //     headers: headers,
   //   });
   // }
-
-  getLoggedInUser(): Observable<User> {
-    console.log('get logged in user');
-
-    const token = this.getToken();
-    const headers = new HttpHeaders({
-      'Access-Control-Allow-Origin': '*',
-      Authorization: `${token}`,
-    });
-
-    return this.httpClient.get<User>(this.url + "/info", {
-      headers: headers,
-    })
-  }
 }
