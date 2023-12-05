@@ -9,7 +9,7 @@ import { AuthService } from "@angular-concert-project/auth-ui";
   providedIn: 'root'
 })
 export class UserService {
-  private url = 'https://angularschoolproject1-production.up.railway.app/api/user';
+  private url = 'https://angularschoolproject1-production.up.railway.app/api/users';
 
   constructor(private httpClient: HttpClient, private authService: AuthService) { }
 
@@ -26,8 +26,8 @@ export class UserService {
     { id: '10', name: 'Julia Young', email: 'julia@example.com', bday: new Date('1986-10-10'), isAdmin: true }
   ];
 
-  getAllUsers(): User[] {
-    return this.users;
+  getAllUsers(): Observable<User[]> {
+    return this.httpClient.get<User[]>(this.url);
   }
 
   getUserById(id: string): User {

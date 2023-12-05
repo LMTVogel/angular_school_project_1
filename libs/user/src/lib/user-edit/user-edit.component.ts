@@ -40,24 +40,24 @@ export class UserEditComponent implements OnInit {
       })
   }
 
-  onSubmit(userForm: NgForm): void {
-    if(this.isEditting) {
-      const editUser = {
-        ...userForm.value,
-        bday: new Date(userForm.value.bday),
-      }
-      this.userService.editUser(editUser);
-    } else {
-      const newUser = {
-        id: this.userService.getAllUsers().length,
-        ...userForm.value,
-        bday: new Date(userForm.value.bday),
-      };
-      this.userService.addUser(newUser);
-    }
-
-    this.router.navigate(['users']);
-  }
+  // onSubmit(userForm: NgForm): void {
+  //   if(this.isEditting) {
+  //     const editUser = {
+  //       ...userForm.value,
+  //       bday: new Date(userForm.value.bday),
+  //     }
+  //     this.userService.editUser(editUser);
+  //   } else {
+  //     const newUser = {
+  //       id: this.userService.getAllUsers().length,
+  //       ...userForm.value,
+  //       bday: new Date(userForm.value.bday),
+  //     };
+  //     this.userService.addUser(newUser);
+  //   }
+  //
+  //   this.router.navigate(['users']);
+  // }
   // ngOnInit(): void {
   //   this.route.paramMap.subscribe((params) => {
   //     let id = params.get('id');
