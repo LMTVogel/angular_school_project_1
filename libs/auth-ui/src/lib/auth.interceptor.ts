@@ -1,6 +1,7 @@
-// import { HTTP_INTERCEPTORS } from '@angular/common/http'
-// import { HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http'
-// import { Injectable } from '@angular/core'
+import { HTTP_INTERCEPTORS } from '@angular/common/http'
+import { HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http'
+import { Injectable } from '@angular/core'
+import { AuthService } from './auth.service'
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -10,16 +11,26 @@ export class AuthInterceptor implements HttpInterceptor {
     '/login',
   ];
 
-//     // Clone the request and replace the original headers with
-//     // cloned headers, updated with the authorization.
-//     const authReq = req.clone({
-//       setHeaders: { Authorization: 'Bearer ' + authToken }
-//     })
+  intercept(req: HttpRequest<any>, next: HttpHandler) {
+    console.log('AuthInterceptor')
+    // Check if the request is whitelisted for not needing a token.
+    if (this.whitelist.some(url => req.url.includes(url))) {
+      return next.handle(req);
+    }
 
-//     // send cloned request with header to the next handler.
-//     return next.handle(authReq)
-//   }
-// }
+    // Get the auth token from the service.
+    const token = this.authService.getToken()
+
+    // Clone the request and replace the original headers with
+    // cloned headers, updated with the authorization.
+    const authReq = req.clone({
+      setHeaders: { Authorization: 'Bearer ' + token }
+    })
+
+    // send cloned request with header to the next handler.
+    return next.handle(authReq)
+  }
+}
 
 // /**
 //  * Http interceptor providers in outside-in order
