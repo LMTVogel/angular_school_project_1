@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { User, UserHttpService } from '@angular-concert-project/user';
+import { User } from '@angular-concert-project/user';
 import { UserService } from "../user.service";
 
 @Component({
@@ -17,11 +17,13 @@ export class UserDetailsComponent implements OnInit {
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    // this.route.paramMap.subscribe((params) => {
-    //   this.user = this.userService.getUserById(Number(params.get('id')));
-    // })
     this.route.paramMap.subscribe((params) => {
-      this.user = this.userService.getUserById(params.get('id')!);
+      const userId = params.get('id');
+      if (userId) {
+        this.userService.getUserById(userId).subscribe((user: User) => {
+          this.user = user;
+        });
+      }
     })
   }
 

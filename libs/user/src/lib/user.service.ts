@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { catchError, Observable, of } from "rxjs";
+import {catchError, map, Observable, of} from "rxjs";
 import { User } from "@angular-concert-project/user";
 import { AuthService } from "@angular-concert-project/auth-ui";
 
@@ -9,7 +9,7 @@ import { AuthService } from "@angular-concert-project/auth-ui";
   providedIn: 'root'
 })
 export class UserService {
-  private url = 'https://angularschoolproject1-production.up.railway.app/api/user';
+  private url = 'https://angularschoolproject1-production.up.railway.app/api/users';
 
   constructor(private httpClient: HttpClient, private authService: AuthService) { }
 
@@ -26,12 +26,24 @@ export class UserService {
     { id: '10', name: 'Julia Young', email: 'julia@example.com', bday: new Date('1986-10-10'), isAdmin: true }
   ];
 
-  getAllUsers(): User[] {
-    return this.users;
+  getAllUsers(): Observable<User[]> {
+    return this.httpClient.get<User[]>(this.url).pipe(
+      map(users => users.map(user => ({
+        ...user,
+        // Convert the bday string to a Date object
+        bday: new Date(user.bday)
+      })))
+    );
   }
 
-  getUserById(id: string): User {
-    return this.users.filter((user) => user.id === id)[0];
+  getUserById(id: string): Observable<User> {
+    return this.httpClient.get<User>(this.url + '/' + id).pipe(
+      map(user => ({
+        ...user,
+        // Convert the bday string to a Date object
+        bday: new Date(user.bday)
+      }))
+    );
   }
 
   addUser(user: User): void {

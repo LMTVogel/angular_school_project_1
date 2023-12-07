@@ -11,7 +11,7 @@ import { AboutComponent } from './pages/about/about.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginPageComponent } from './auth/login/login.component';
 import { LoginComponent } from '@angular-concert-project/auth-ui';
-
+import { httpInterceptorProviders } from "@angular-concert-project/auth-ui";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
@@ -32,7 +32,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NgbModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    httpInterceptorProviders
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
