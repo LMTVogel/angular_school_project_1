@@ -36,8 +36,14 @@ export class UserService {
     );
   }
 
-  getUserById(id: string): User {
-    return this.users.filter((user) => user.id === id)[0];
+  getUserById(id: string): Observable<User> {
+    return this.httpClient.get<User>(this.url + '/' + id).pipe(
+      map(user => ({
+        ...user,
+        // Convert the bday string to a Date object
+        bday: new Date(user.bday)
+      }))
+    );
   }
 
   addUser(user: User): void {

@@ -78,14 +78,6 @@ export class AuthService {
   getLoggedInUser(): Observable<User> {
     console.log('get logged in user');
 
-    const token = this.getToken();
-    const headers = new HttpHeaders({
-      'Access-Control-Allow-Origin': '*',
-      Authorization: `${token}`,
-    });
-
-    return this.httpClient.get<User>(this.url + "/info", {
-      headers: headers,
-    })
+    return this.httpClient.get<User>(this.url + "/info");
   }
 }

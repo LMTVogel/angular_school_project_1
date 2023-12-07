@@ -1,12 +1,19 @@
 <div class="card mt-5" style="width: 18rem;">
     <div class="card-body">
         <h5 class="card-title">{{user!.name}}</h5>
-        <p>
+        <p *ngIf="user; else noUser">
             Naam: {{user!.name}}
             <br/>
             E-mail: {{user!.email}}
             <br/>
-            Geboortedatum: {{user!.bday.toLocaleDateString()}}
+            Geboortedatum: {{ user.bday | date: 'dd-MM-yyyy' }}
+
+      <br/>
+            Gebruiker is een admin: <span *ngIf="user!.isAdmin; else notAdmin">Ja</span>
+            <ng-template #notAdmin>Nee</ng-template>
         </p>
+        <ng-template #noUser>
+            <p>Geen gebruiker gevonden</p>
+        </ng-template>
     </div>
 </div>

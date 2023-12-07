@@ -11,7 +11,6 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   user!: UserCredentials;
   wrongLogin = false;
-  userLoggedIn: boolean = false;
 
   constructor(
     private authService: AuthService,

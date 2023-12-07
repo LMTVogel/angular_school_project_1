@@ -22,11 +22,13 @@ export class UserEditComponent implements OnInit {
 
   ngOnInit(): void {
       this.route.paramMap.subscribe((params) => {
-        const id = params.get('id');
+        const userId = params.get('id');
 
-        if(id) {
+        if(userId) {
           this.isEditting = true;
-          this.user = this.userService.getUserById(id);
+          this.userService.getUserById(userId).subscribe((user: User) => {
+            this.user = user;
+          });
         } else {
           this.isEditting = false;
           this.user = {
