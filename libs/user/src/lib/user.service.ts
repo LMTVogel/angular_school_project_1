@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { catchError, Observable, of } from "rxjs";
+import {catchError, map, Observable, of} from "rxjs";
 import { User } from "@angular-concert-project/user";
 import { AuthService } from "@angular-concert-project/auth-ui";
 
@@ -27,7 +27,13 @@ export class UserService {
   ];
 
   getAllUsers(): Observable<User[]> {
-    return this.httpClient.get<User[]>(this.url);
+    return this.httpClient.get<User[]>(this.url).pipe(
+      map(users => users.map(user => ({
+        ...user,
+        // Convert the bday string to a Date object
+        bday: new Date(user.bday)
+      })))
+    );
   }
 
   getUserById(id: string): User {
