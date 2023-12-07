@@ -24,18 +24,15 @@ export class AuthInterceptor implements HttpInterceptor {
     // Clone the request and replace the original headers with
     // cloned headers, updated with the authorization.
     const authReq = req.clone({
-      setHeaders: { Authorization: 'Bearer ' + token }
-    })
+      headers: req.headers.set('Authorization', token)
+        .set('Access-Control-Allow-Origin', '*')
+    });
 
     // send cloned request with header to the next handler.
     return next.handle(authReq)
   }
 }
 
-// /**
-//  * Http interceptor providers in outside-in order
-//  * https://angular.io/guide/http#interceptor-order
-//  */
-// export const httpInterceptorProviders = [
-//   { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
-// ]
+export const httpInterceptorProviders = [
+  { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+]
