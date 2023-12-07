@@ -8,15 +8,22 @@ import {User} from "@angular-concert-project/user";
   providedIn: 'root'
 })
 export class AuthService {
-  loggedIn = new BehaviorSubject(localStorage.getItem('token') ? true : false);
-
-  set setLoggedInStatus(status: boolean) {
-    this.loggedIn.next(status);
-  }
+  private loggedIn = new BehaviorSubject<boolean>(this.checkToken());
+  private url = 'https://angularschoolproject1-production.up.railway.app/auth';
 
   constructor(private httpClient: HttpClient) { }
 
-  private url = 'https://angularschoolproject1-production.up.railway.app/auth';
+  private checkToken(): boolean {
+    return !!localStorage.getItem('token');
+  }
+
+  getAuthStatusListener() {
+    return this.loggedIn.asObservable();
+  }
+
+  updateAuthStatus() {
+    this.loggedIn.next(this.checkToken());
+  }
 
   getToken(): string {
     return JSON.parse(localStorage.getItem('token') || '');
@@ -24,13 +31,7 @@ export class AuthService {
 
   login(user: UserCredentials): Observable<string> {
     console.log('login user service');
-    return this.httpClient.post<string>(this.url + '/login', user)
-      .pipe(
-        catchError((error) => {
-          console.log('error: ', error);
-          return of(error)
-        })
-      );
+    return this.httpClient.post<string>(this.url + '/login', user);
   }
 
   constructHeader() {
@@ -70,6 +71,7 @@ export class AuthService {
   logOut(): boolean {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+
     return false;
   }
 
