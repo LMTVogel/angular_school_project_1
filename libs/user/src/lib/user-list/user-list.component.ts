@@ -14,11 +14,22 @@ export class UserListComponent implements OnInit {
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
+    this.loadUsers();
+  }
+
+  loadUsers(): void {
     this.userService.getAllUsers().subscribe(users => this.users = users);
-    console.log(JSON.stringify(this.users))
   }
 
   deleteUser(id: string): void {
-    this.userService.deleteUser(id);
+    if (confirm("Are you sure you want to delete this user?")) {
+      this.userService.deleteUser(id).subscribe(() => {
+        // After the user is successfully deleted, refresh the list of users.
+        this.loadUsers();
+      }, error => {
+        // Handle any errors here.
+        console.error('Error deleting user', error);
+      });
+    }
   }
 }

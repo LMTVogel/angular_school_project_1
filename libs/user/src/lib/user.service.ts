@@ -55,9 +55,8 @@ export class UserService {
     this.users[userToEdit] = user;
   }
 
-  deleteUser(id: string): void {
-    const userToDelete = this.users.findIndex((user) => user.id === id);
-    this.users.splice(userToDelete, 1);
+  deleteUser(id: string): Observable<any> {
+    return this.httpClient.delete(this.url + '/' + id);
   }
 
   // getAllUsers(): Observable<User[]> {
