@@ -39,4 +39,10 @@ export class UserController {
         console.log(token);
         return this.userService.deleteUser(token.id, token.email);
     }
+
+    @Delete(':userId')
+    async deleteUserById(@Param("userId") id: string): Promise<UserModel> {
+        const user = await this.userService.getUserById(id);
+        return this.userService.deleteUser(user.id, user.email);
+    }
 }
