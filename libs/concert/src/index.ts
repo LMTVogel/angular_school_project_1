@@ -4,3 +4,4 @@ export * from './lib/concert.service';
 export * from './lib/concert-edit/concert-edit.component';
 export * from './lib/concert-details/concert-details.component';
 export * from './lib/concert-list/concert-list.component';
+export * from './lib/concert-list-admin/concert-list-admin.component';

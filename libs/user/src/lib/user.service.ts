@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { map, Observable } from "rxjs";
+import {BehaviorSubject, map, Observable} from "rxjs";
 import { User } from "@angular-concert-project/user";
 import { AuthService } from "@angular-concert-project/auth-ui";
 
@@ -9,8 +9,9 @@ import { AuthService } from "@angular-concert-project/auth-ui";
   providedIn: 'root'
 })
 export class UserService {
-  private url = 'https://angularschoolproject1-production.up.railway.app/api/users';
-  // private url = 'http://localhost:3333/api/users';
+  // private url = 'https://angularschoolproject1-production.up.railway.app/api/users';
+  private url = 'http://localhost:3333/api/users';
+  private isAdmin = new BehaviorSubject<boolean>(this.checkAdmin());
 
   constructor(private httpClient: HttpClient, private authService: AuthService) { }
 
@@ -31,6 +32,25 @@ export class UserService {
         // Convert the bday string to a Date object
         bday: new Date(user.bday)
       }))
+    );
+  }
+
+  private checkAdmin(): boolean {
+    return localStorage.getItem('isAdmin') === 'true';
+  }
+
+  getAdminStatusListener() {
+    return this.isAdmin.asObservable();
+  }
+
+  checkAdminStatus(): Observable<boolean> {
+    return this.httpClient.get<{ isAdmin: boolean }>(this.url + '/isUserAdmin').pipe(
+      map(response => {
+        const adminStatus = response.isAdmin;
+        localStorage.setItem('isAdmin', String(adminStatus));
+        this.isAdmin.next(adminStatus);
+        return adminStatus;
+      })
     );
   }
 
