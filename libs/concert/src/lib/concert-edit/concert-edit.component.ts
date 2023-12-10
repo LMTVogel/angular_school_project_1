@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import {FormBuilder, FormGroup, FormArray, Validators} from '@angular/forms';
 
 import {Artist, ConcertService} from '@angular-concert-project/concert';
 
@@ -22,18 +22,18 @@ export class ConcertEditComponent implements OnInit {
   ) {
     this.concertForm = this.fb.group({
       id: [''],
-      name: [''],
-      description: [''],
-      startDate: [''],
-      maxTickets: [''],
-      minimumAge: [''],
-      artists: this.fb.array([]),
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      startDate: ['', Validators.required],
+      maxTickets: ['', [Validators.required, Validators.min(1)]],
+      minimumAge: ['', [Validators.required, Validators.min(0)]],
+      artists: this.fb.array([], Validators.required),
       location: this.fb.group({
-        name: [''],
-        streetAddress: [''],
-        zipCode: [''],
-        city: [''],
-        country: ['']
+        name: ['', Validators.required],
+        streetAddress: ['', Validators.required],
+        zipCode: ['', Validators.required],
+        city: ['', Validators.required],
+        country: ['', Validators.required]
       })
     });
   }
@@ -68,9 +68,9 @@ export class ConcertEditComponent implements OnInit {
     this.artists.clear();
     artists.forEach((artist) => {
       this.artists.push(this.fb.group({
-        name: artist.name,
+        name: [artist.name, Validators.required],
         band: this.fb.group({
-          name: artist.band.name
+          name: [artist.band.name, Validators.required]
         })
       }));
     });
@@ -78,9 +78,9 @@ export class ConcertEditComponent implements OnInit {
 
   addArtist(): void {
     this.artists.push(this.fb.group({
-      name: '',
+      name: ['', Validators.required],
       band: this.fb.group({
-        name: ''
+        name: ['', Validators.required]
       })
     }));
   }
@@ -106,15 +106,18 @@ export class ConcertEditComponent implements OnInit {
       if (this.isEditing) {
         // Update the concert.
         this.concertService.editConcert(formValue).subscribe(() => {
-          this.router.navigate(['concerts']);
+          this.router.navigate(['concerts-overview']);
         });
       } else {
         // Add a new concert
         delete formValue.id; // We don't want to send the ID to the API, because it will generate a new one in the API itself.
         this.concertService.addConcert(formValue).subscribe(() => {
-          this.router.navigate(['concerts']);
+          this.router.navigate(['concerts-overview']);
         });
       }
+    } else {
+      console.log('Invalid form');
+      this.concertForm.markAllAsTouched();
     }
   }
 }

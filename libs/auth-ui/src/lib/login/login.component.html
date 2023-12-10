@@ -1,27 +1,33 @@
+<h1 class="mt-5">Log in</h1>
 <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
-    <div class="mb-3">
-        <input
-        placeholder="Email"
-        type="email"
-        class="form-control"
-        id="email"
-        name="email"
-        #email="ngModel"
-        [(ngModel)]="user!.email"
-        />
-    </div>
-    <div class="mb-3">
-        <input
-        placeholder="Password"
-        type="password"
-        class="form-control"
-        id="password"
-        name="password"
-        #password="ngModel"
-        [(ngModel)]="user!.password"
-        />
-    </div>
-    <div class="mb-3">
-        <button type="submit" class="btn btn-primary">Log in</button>
-    </div>
+  <div class="mb-3">
+    <input
+      placeholder="Email"
+      type="email"
+      class="form-control"
+      id="email"
+      name="email"
+      #email="ngModel"
+      [(ngModel)]="user!.email"
+    />
+  </div>
+  <div class="mb-3">
+    <input
+      placeholder="Password"
+      type="password"
+      class="form-control"
+      id="password"
+      name="password"
+      #password="ngModel"
+      [(ngModel)]="user!.password"
+    />
+  </div>
+  <div class="mb-3">
+    <button type="submit" class="btn btn-primary">Log in</button>
+  </div>
+
+  <!-- Error message -->
+  <div *ngIf="wrongLogin" class="alert alert-danger">
+    Incorrect email of wachtwoord.
+  </div>
 </form>

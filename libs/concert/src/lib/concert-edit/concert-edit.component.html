@@ -3,39 +3,66 @@
 
 <form [formGroup]="concertForm" (ngSubmit)="onSubmit()">
 
-  <!-- Hidden ID Field for Editing -->
-  <input *ngIf="isEditing" type="hidden" formControlName="id">
-
   <!-- Concert Details Grouping -->
   <div class="mb-3">
     <h4>Concert details</h4>
+
+    <!-- Name Field -->
     <label for="name" class="form-label">Naam</label>
-    <input formControlName="name" required type="text" class="form-control" id="name">
+    <input formControlName="name" type="text" class="form-control" id="name">
+    <div *ngIf="concertForm.get('name')?.invalid && concertForm.get('name')?.touched" class="text-danger">
+      Naam is verplicht.
+    </div>
 
+    <!-- Description Field -->
     <label for="description" class="form-label">Beschrijving</label>
-    <textarea formControlName="description" required class="form-control" id="description"></textarea>
+    <textarea formControlName="description" class="form-control" id="description"></textarea>
+    <div *ngIf="concertForm.get('description')?.invalid && concertForm.get('description')?.touched" class="text-danger">
+      Beschrijving is verplicht.
+    </div>
 
+    <!-- Start Date Field -->
     <label for="startDate" class="form-label">Startdatum</label>
-    <input formControlName="startDate" required type="date" class="form-control" id="startDate">
+    <input formControlName="startDate" type="date" class="form-control" id="startDate">
+    <div *ngIf="concertForm.get('startDate')?.invalid && concertForm.get('startDate')?.touched" class="text-danger">
+      Startdatum is verplicht.
+    </div>
 
+    <!-- Max Tickets Field -->
     <label for="maxTickets" class="form-label">Max. aantal tickets</label>
-    <input formControlName="maxTickets" required type="number" class="form-control" id="maxTickets">
+    <input formControlName="maxTickets" type="number" class="form-control" id="maxTickets">
+    <div *ngIf="concertForm.get('maxTickets')?.invalid && concertForm.get('maxTickets')?.touched" class="text-danger">
+      Een geldige waarde voor max. aantal tickets is verplicht.
+    </div>
 
+    <!-- Minimum Age Field -->
     <label for="minimumAge" class="form-label">Minimum leeftijd</label>
-    <input formControlName="minimumAge" required type="number" class="form-control" id="minimumAge">
+    <input formControlName="minimumAge" type="number" class="form-control" id="minimumAge">
+    <div *ngIf="concertForm.get('minimumAge')?.invalid && concertForm.get('minimumAge')?.touched" class="text-danger">
+      Een geldige waarde voor minimum leeftijd is verplicht.
+    </div>
   </div>
 
+  <!-- Artists -->
   <div formArrayName="artists" class="mb-3">
     <h4>Artiesten</h4>
     <div *ngFor="let artistGroup of artists.controls; let i = index" [formGroupName]="i">
       <div class="form-group">
+        <!-- Artist Name Field -->
         <label for="artistName-{{i}}">Naam artiest</label>
         <input formControlName="name" type="text" class="form-control" id="artistName-{{i}}">
+        <div *ngIf="artistGroup.get('name')?.invalid && artistGroup.get('name')?.touched" class="text-danger">
+          Naam van de artiest is verplicht.
+        </div>
 
         <!-- Nested group for band -->
         <div formGroupName="band">
+          <!-- Band Name Field -->
           <label for="bandName-{{i}}">Naam band</label>
           <input formControlName="name" type="text" class="form-control" id="bandName-{{i}}">
+          <div *ngIf="artistGroup.get('band')?.get('name')?.invalid && artistGroup.get('band')?.get('name')?.touched" class="text-danger">
+            Naam van de band is verplicht.
+          </div>
         </div>
 
         <button type="button" (click)="removeArtist(i)">Artiest verwijderen</button>
@@ -48,20 +75,40 @@
   <div class="mb-3" formGroupName="location">
     <h4>Locatie</h4>
 
+    <!-- Location Name Field -->
     <label for="locationName" class="form-label">Locatienaam</label>
     <input formControlName="name" type="text" class="form-control" id="locationName">
+    <div *ngIf="concertForm.get('location')?.get('name')?.invalid && concertForm.get('location')?.get('name')?.touched" class="text-danger">
+      Locatienaam is verplicht.
+    </div>
 
+    <!-- Street Address Field -->
     <label for="streetAddress" class="form-label">Straatnaam</label>
     <input formControlName="streetAddress" type="text" class="form-control" id="streetAddress">
+    <div *ngIf="concertForm.get('location')?.get('streetAddress')?.invalid && concertForm.get('location')?.get('streetAddress')?.touched" class="text-danger">
+      Straatnaam is verplicht.
+    </div>
 
+    <!-- Zip Code Field -->
     <label for="zipCode" class="form-label">Postcode</label>
     <input formControlName="zipCode" type="text" class="form-control" id="zipCode">
+    <div *ngIf="concertForm.get('location')?.get('zipCode')?.invalid && concertForm.get('location')?.get('zipCode')?.touched" class="text-danger">
+      Postcode is verplicht.
+    </div>
 
+    <!-- City Field -->
     <label for="city" class="form-label">Stad</label>
     <input formControlName="city" type="text" class="form-control" id="city">
+    <div *ngIf="concertForm.get('location')?.get('city')?.invalid && concertForm.get('location')?.get('city')?.touched" class="text-danger">
+      Stad is verplicht.
+    </div>
 
+    <!-- Country Field -->
     <label for="country" class="form-label">Land</label>
     <input formControlName="country" type="text" class="form-control" id="country">
+    <div *ngIf="concertForm.get('location')?.get('country')?.invalid && concertForm.get('location')?.get('country')?.touched" class="text-danger">
+      Land is verplicht.
+    </div>
   </div>
 
   <!-- Submit Button -->
