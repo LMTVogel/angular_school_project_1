@@ -1,58 +1,36 @@
-// import { Injectable } from '@angular/core';
-// import {
-//   CanActivate,
-//   CanActivateChild,
-//   ActivatedRouteSnapshot,
-//   RouterStateSnapshot,
-//   Router,
-// } from '@angular/router';
-// import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-// import { Observable } from 'rxjs';
-// import { map } from 'rxjs/operators';
-// import { UserInfo } from '@find-a-buddy/data';
-// import { ModalLeaveYesNoComponent } from '@find-a-buddy/util-ui';
-// import { AuthService } from './auth.service';
+import { Injectable } from '@angular/core';
+import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { UserService } from "@angular-concert-project/user";
+import {catchError, map, Observable, of} from "rxjs";
 
-// /**
-//  * Verifies that user is logged in before navigating to routes.
-//  *
-//  */
-// @Injectable()
-// export class LoggedInAuthGuard implements CanActivate, CanActivateChild {
-//   //
-//   constructor(private authService: AuthService, private router: Router) {}
+@Injectable({
+  providedIn: 'root',
+})
+export class AuthGuard implements CanActivate {
+  constructor(
+    private router: Router,
+    private userService: UserService,
+    ) {}
 
-//   canActivate(): Observable<boolean> {
-//     console.log('canActivate LoggedIn');
-//     return this.authService.currentUser$.pipe(
-//       map((user: UserInfo | undefined) => {
-//         if (user && user.token) {
-//           return true;
-//         } else {
-//           console.log('not logged in, reroute to /');
-//           this.router.navigate(['/']);
-//           return false;
-//         }
-//       })
-//     );
-//   }
+  canActivate(
+    next: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): boolean {
+    const token = localStorage.getItem('token');
+    const isAdmin = localStorage.getItem('isAdmin');
 
-//   canActivateChild(): // route: ActivatedRouteSnapshot,
-//   // state: RouterStateSnapshot
-//   Observable<boolean> | Promise<boolean> | boolean {
-//     console.log('canActivateChild LoggedIn');
-//     return this.canActivate();
-//   }
-// }
-
-// @Injectable()
-// export class SaveEditedWorkGuard {
-//   constructor(private modalService: NgbModal) {}
-
-//   canDeactivate(): Promise<boolean> {
-//     return this.modalService
-//       .open(ModalLeaveYesNoComponent)
-//       .result.then(() => true)
-//       .catch(() => false);
-//   }
-// }
+    if (!token) {
+      // If there is no token in localStorage, navigate to not authorized page
+      this.router.navigate(['/not-authorized']);
+      return false;
+    } else if (token && isAdmin === 'true') {
+      // If there is a token and the user is an admin, allow access
+      return true;
+    } else if (token && isAdmin === 'false') {
+      // if the token is filled but the user is not an admin, the not authorized page is shown
+      this.router.navigate(['/not-authorized']);
+      return false;
+    }
+    return false;
+  }
+}

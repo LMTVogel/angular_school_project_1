@@ -1,6 +1,6 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import {catchError, map, Observable, of} from "rxjs";
+import {BehaviorSubject, map, Observable} from "rxjs";
 import { User } from "@angular-concert-project/user";
 import { AuthService } from "@angular-concert-project/auth-ui";
 
@@ -11,21 +11,9 @@ import { AuthService } from "@angular-concert-project/auth-ui";
 export class UserService {
   private url = 'https://angularschoolproject1-production.up.railway.app/api/users';
   // private url = 'http://localhost:3333/api/users';
+  private isAdmin = new BehaviorSubject<boolean>(this.checkAdmin());
 
   constructor(private httpClient: HttpClient, private authService: AuthService) { }
-
-  users: User[] = [
-    { id: '1', name: 'Alice Smith', email: 'alice@example.com', bday: new Date('1990-01-01'), isAdmin: true },
-    { id: '2', name: 'Bob Johnson', email: 'bob@example.com', bday: new Date('1985-02-02'), isAdmin: false },
-    { id: '3', name: 'Charlie Davis', email: 'charlie@example.com', bday: new Date('1992-03-03'), isAdmin: false },
-    { id: '4', name: 'Diana Evans', email: 'diana@example.com', bday: new Date('1988-04-04'), isAdmin: true },
-    { id: '5', name: 'Ethan Harris', email: 'ethan@example.com', bday: new Date('1991-05-05'), isAdmin: false },
-    { id: '6', name: 'Fiona King', email: 'fiona@example.com', bday: new Date('1989-06-06'), isAdmin: false },
-    { id: '7', name: 'George Lee', email: 'george@example.com', bday: new Date('1993-07-07'), isAdmin: true },
-    { id: '8', name: 'Hannah Martin', email: 'hannah@example.com', bday: new Date('1987-08-08'), isAdmin: false },
-    { id: '9', name: 'Ian Clark', email: 'ian@example.com', bday: new Date('1995-09-09'), isAdmin: false },
-    { id: '10', name: 'Julia Young', email: 'julia@example.com', bday: new Date('1986-10-10'), isAdmin: true }
-  ];
 
   getAllUsers(): Observable<User[]> {
     return this.httpClient.get<User[]>(this.url).pipe(
@@ -47,6 +35,25 @@ export class UserService {
     );
   }
 
+  private checkAdmin(): boolean {
+    return localStorage.getItem('isAdmin') === 'true';
+  }
+
+  getAdminStatusListener() {
+    return this.isAdmin.asObservable();
+  }
+
+  checkAdminStatus(): Observable<boolean> {
+    return this.httpClient.get<{ isAdmin: boolean }>(this.url + '/isUserAdmin').pipe(
+      map(response => {
+        const adminStatus = response.isAdmin;
+        localStorage.setItem('isAdmin', String(adminStatus));
+        this.isAdmin.next(adminStatus);
+        return adminStatus;
+      })
+    );
+  }
+
   updateUser(user: User): Observable<User> {
     return this.httpClient.put<User>(this.url, user);
   }
@@ -54,38 +61,4 @@ export class UserService {
   deleteUser(id: string): Observable<any> {
     return this.httpClient.delete(this.url + '/' + id);
   }
-
-  // getAllUsers(): Observable<User[]> {
-  //   const token = this.getToken();
-  //   const headers = new HttpHeaders({
-  //     'Access-Control-Allow-Origin': '*',
-  //     Authorization: `${token}`,
-  //   });
-
-  //   return this.httpClient.get<User[]>(this.url, {
-  //     headers: headers,
-  //   });
-  // }
-
-  // getUserById(userId: string): Observable<User> {
-  //   console.log('get user profile');
-
-  //   return this.httpClient.get<User>(this.url + '/' + userId, {
-  //     headers: this.authService.constructHeader(),
-  //   });
-  // }
-
-  // getOrganisationsFromUser(): Observable<User> {
-  //   console.log('get organisations from user');
-
-  //   const token = this.getToken();
-  //   const headers = new HttpHeaders({
-  //     'Access-Control-Allow-Origin': '*',
-  //     Authorization: `${token}`,
-  //   });
-
-  //   return this.httpClient.get<User>(this.url + "/organisations", {
-  //     headers: headers,
-  //   });
-  // }
 }

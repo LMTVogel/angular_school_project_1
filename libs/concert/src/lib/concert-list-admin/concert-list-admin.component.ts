@@ -4,10 +4,10 @@ import { ConcertService, Concert } from '@angular-concert-project/concert';
 
 @Component({
   selector: 'angular-concert-project-concert-list-admin',
-  templateUrl: './concert-list.component.html',
-  styleUrls: ['./concert-list.component.scss']
+  templateUrl: './concert-list-admin.component.html',
+  styleUrls: ['./concert-list-admin.component.scss']
 })
-export class ConcertListComponent implements OnInit {
+export class ConcertListAdminComponent implements OnInit {
   concerts: Concert[] = [];
 
   constructor(private concertService: ConcertService) { }
@@ -18,5 +18,15 @@ export class ConcertListComponent implements OnInit {
 
   loadConcerts(): void {
     this.concertService.getAllConcerts().subscribe(concerts => this.concerts = concerts);
+  }
+
+  deleteConcert(id: string): void {
+    if (confirm("Are you sure you want to delete this concert?")) {
+      this.concertService.deleteConcert(id).subscribe(() => {
+        this.loadConcerts();
+      }, error => {
+        console.error('Error deleting concert', error);
+      });
+    }
   }
 }

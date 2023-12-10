@@ -25,3 +25,8 @@ export interface Concert {
   artists: Artist[];
   location: Location;
 }
+
+export interface Ticket {
+  price: number;
+  concert: string;
+}

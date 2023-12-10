@@ -10,10 +10,16 @@
           <a class="nav-link" routerLink="">About</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="users">Users Overzicht</a>
+          <a *ngIf="isAdmin && isLoggedIn" class="nav-link" routerLink="users">Users Overzicht</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="concerts">Concerten Overzicht</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="tickets">Tickets Overzicht</a>
+        </li>
+        <li class="nav-item">
+          <a *ngIf="isAdmin && isLoggedIn" class="nav-link" routerLink="concerts-admin">Concerten ADMIN</a>
         </li>
         <li class="nav-item">
           <a *ngIf="!isLoggedIn" class="nav-link" routerLink="login">Log in</a>
