@@ -19,13 +19,12 @@ const routes: Routes = [
 
   { path: 'tickets', pathMatch: 'full', component: TicketListComponent },
 
-  { path: 'concerts', pathMatch: 'full', component: ConcertListComponent },
+  { path: 'concerts-overview', pathMatch: 'full', component: ConcertListComponent },
   { path: 'concerts/:id', pathMatch: 'full', component: ConcertDetailsComponent },
 
   { path: 'concerts-admin', pathMatch: 'full', component: ConcertListAdminComponent, canActivate: [AuthGuard] },
   { path: 'concerts-admin/new', pathMatch: 'full', component: ConcertEditComponent, canActivate: [AuthGuard] },
   { path: 'concerts-admin/:id/edit', pathMatch: 'full', component: ConcertEditComponent, canActivate: [AuthGuard] },
-
 ];
 
 @NgModule({

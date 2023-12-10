@@ -9,7 +9,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
   private whitelist = [
     '/login',
-    '/concerts',
+    '/concerts-overview',
     '/about',
   ];
 
