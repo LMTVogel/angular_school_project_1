@@ -41,8 +41,8 @@ export class ConcertController {
   }
 
   @UseGuards(AdminGuard)
-  @Put(':id')
-  async updateConcert(@Param('id') id: string, @Body() concert: Concert): Promise<Concert> {
-    return await this.concertService.updateConcert(id, concert);
+  @Put()
+  async updateConcert(@Body() concert: Concert): Promise<Concert> {
+    return await this.concertService.updateConcert(concert);
   }
 }

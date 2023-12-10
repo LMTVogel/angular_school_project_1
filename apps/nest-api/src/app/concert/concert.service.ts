@@ -47,8 +47,8 @@ export class ConcertService {
   }
 
   @UseGuards(AdminGuard)
-  async updateConcert(id: string, concert: Concert): Promise<Concert> {
-    return await this.concertModel.findOneAndUpdate({ id: id }, concert, { new: true });
+  async updateConcert(concert: Concert): Promise<Concert> {
+    return await this.concertModel.findOneAndUpdate({ id: concert.id }, concert, { new: true });
   }
 
   async recommendConcerts(id: string): Promise<Concert[]> {

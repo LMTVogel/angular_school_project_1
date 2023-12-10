@@ -18,6 +18,7 @@ export interface Artist {
 export interface Concert {
   id: string;
   name: string;
+  description: string;
   startDate: Date;
   maxTickets: number;
   minimumAge: number;

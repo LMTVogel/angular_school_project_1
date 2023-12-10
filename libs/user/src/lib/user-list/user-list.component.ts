@@ -24,10 +24,8 @@ export class UserListComponent implements OnInit {
   deleteUser(id: string): void {
     if (confirm("Are you sure you want to delete this user?")) {
       this.userService.deleteUser(id).subscribe(() => {
-        // After the user is successfully deleted, refresh the list of users.
         this.loadUsers();
       }, error => {
-        // Handle any errors here.
         console.error('Error deleting user', error);
       });
     }

@@ -1,4 +1,3 @@
-import { DEFAULT_INTERPOLATION_CONFIG } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 
 import { Concert } from '@angular-concert-project/concert';
@@ -67,13 +66,12 @@ export class ConcertService {
     );
   }
 
-  addConcert(concert: Concert): void {
-    // this.concerts.push(concert);
+  addConcert(concert: Concert): Observable<Concert> {
+    return this.httpClient.post<Concert>(this.url, concert);
   }
 
-  editConcert(concert: Concert): void {
-    // let concertToEdit = this.concerts.findIndex((c) => c.id === concert.id);
-    // this.concerts[concertToEdit] = concert;
+  editConcert(concert: Concert): Observable<Concert> {
+    return this.httpClient.put<Concert>(this.url, concert);
   }
 
   deleteConcert(id: string): Observable<any> {

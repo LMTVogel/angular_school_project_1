@@ -23,10 +23,8 @@ export class ConcertListComponent implements OnInit {
   deleteConcert(id: string): void {
     if (confirm("Are you sure you want to delete this concert?")) {
       this.concertService.deleteConcert(id).subscribe(() => {
-        // After the concert is successfully deleted, refresh the list of concerts.
         this.loadConcerts();
       }, error => {
-        // Handle any errors here.
         console.error('Error deleting concert', error);
       });
     }

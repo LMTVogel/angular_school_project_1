@@ -3,7 +3,7 @@
 <div class="card mt-4">
   <div class="card-body">
     <div class="row">
-      <!-- Left Side: Concert Details and Location -->
+      <!-- Left Side: Concert Details, Description and Location -->
       <div class="col-md-6">
         <h4>Concert details</h4>
         <p>
@@ -15,6 +15,22 @@
           <br/>
           Minimum leeftijd: {{concert!.minimumAge}}
         </p>
+
+        <!-- Description -->
+        <div class="mt-4">
+          <h4>Beschrijving</h4>
+          <p>{{concert!.description}}</p>
+        </div>
+      </div>
+
+      <!-- Right Side: Artists and Bands -->
+      <div class="col-md-6">
+        <h4>Artiesten</h4>
+        <ul class="list-unstyled">
+          <li *ngFor="let artist of concert!.artists">
+            {{artist.name}} - <em>{{artist.band.name}}</em>
+          </li>
+        </ul>
 
         <!-- Location Details -->
         <div class="mt-4">
@@ -31,16 +47,6 @@
             Land: {{concert!.location.country}}
           </p>
         </div>
-      </div>
-
-      <!-- Right Side: Artists and Bands -->
-      <div class="col-md-6">
-        <h4>Artiesten</h4>
-        <ul class="list-unstyled">
-          <li *ngFor="let artist of concert!.artists">
-            {{artist.name}} - <em>{{artist.band.name}}</em>
-          </li>
-        </ul>
       </div>
     </div>
   </div>
