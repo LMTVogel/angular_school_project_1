@@ -44,4 +44,8 @@ export class TicketService {
     async isConcertSoldOut(concert: Concert): Promise<boolean> {
         return await this.ticketModel.countDocuments({ concert: concert }) >= concert.maxTickets;
     }
+
+    async deleteTicket(id: string): Promise<Ticket> {
+        return await this.ticketModel.findOneAndDelete({ id: id });
+    }
 }

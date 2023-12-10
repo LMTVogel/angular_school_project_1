@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Concert } from '@angular-concert-project/concert';
+import {Concert, Ticket} from '@angular-concert-project/concert';
 import {map, Observable} from "rxjs";
 import { HttpClient } from "@angular/common/http";
 
@@ -46,5 +46,17 @@ export class ConcertService {
 
   deleteConcert(id: string): Observable<any> {
     return this.httpClient.delete(this.concertUrl + '/' + id);
+  }
+
+  reserveTicket(ticket: Ticket): Observable<any> {
+    return this.httpClient.post(this.ticketUrl, ticket);
+  }
+
+  getTicketsFromUser(): Observable<any> {
+    return this.httpClient.get<any>(this.ticketUrl);
+  }
+
+  deleteTicket(ticketId: string): Observable<any> {
+    return this.httpClient.delete(this.ticketUrl + '/' + ticketId);
   }
 }
