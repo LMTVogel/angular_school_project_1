@@ -20,6 +20,8 @@ export class UserService {
     }
 
     async updateUser(incomingUser: UserModel): Promise<UserModel> {
+        const existingUser = await this.userModel.findOne({ id: incomingUser.id });
+
         const user = await this.userModel.findOneAndUpdate(
             { id: incomingUser.id }, 
             incomingUser,
@@ -27,8 +29,8 @@ export class UserService {
         );
 
         await this.identityModel.findOneAndUpdate(
-            { email: user.email },
-            { email: user.email },
+            { email: existingUser.email },
+            { email: incomingUser.email },
             { new: true }
         );
         
