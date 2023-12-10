@@ -10,6 +10,7 @@ import { AuthService } from "@angular-concert-project/auth-ui";
 })
 export class UserService {
   private url = 'https://angularschoolproject1-production.up.railway.app/api/users';
+  // private url = 'http://localhost:3333/api/users';
 
   constructor(private httpClient: HttpClient, private authService: AuthService) { }
 
@@ -46,13 +47,8 @@ export class UserService {
     );
   }
 
-  addUser(user: User): void {
-    this.users.push(user);
-  }
-
-  editUser(user: User): void {
-    const userToEdit = this.users.findIndex((u) => u.id === user.id);
-    this.users[userToEdit] = user;
+  updateUser(user: User): Observable<User> {
+    return this.httpClient.put<User>(this.url, user);
   }
 
   deleteUser(id: string): Observable<any> {

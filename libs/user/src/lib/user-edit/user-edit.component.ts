@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { User, UserHttpService } from '@angular-concert-project/user';
+import { User } from '@angular-concert-project/user';
 import { UserService } from "../user.service";
 import { NgForm } from '@angular/forms';
 
@@ -12,7 +12,7 @@ import { NgForm } from '@angular/forms';
 })
 export class UserEditComponent implements OnInit {
   user: User | undefined = undefined;
-  isEditting = false;
+  bdayString: string | undefined;
 
   constructor(
     private userService: UserService,
@@ -21,80 +21,36 @@ export class UserEditComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-      this.route.paramMap.subscribe((params) => {
-        const userId = params.get('id');
+    this.route.paramMap.subscribe(params => {
+      const userId = params.get('id');
 
-        if(userId) {
-          this.isEditting = true;
-          this.userService.getUserById(userId).subscribe((user: User) => {
-            this.user = user;
-          });
-        } else {
-          this.isEditting = false;
-          this.user = {
-            id: '',
-            name: '',
-            email: '',
-            bday: new Date(),
-            isAdmin: false,
-          };
-        }
-      })
+      if (userId) {
+        this.userService.getUserById(userId).subscribe(user => {
+          this.user = user;
+          this.bdayString = this.formatDate(user.bday);
+        });
+      } else {
+        console.error('No user ID was provided.')
+      }
+    });
   }
 
-  // onSubmit(userForm: NgForm): void {
-  //   if(this.isEditting) {
-  //     const editUser = {
-  //       ...userForm.value,
-  //       bday: new Date(userForm.value.bday),
-  //     }
-  //     this.userService.editUser(editUser);
-  //   } else {
-  //     const newUser = {
-  //       id: this.userService.getAllUsers().length,
-  //       ...userForm.value,
-  //       bday: new Date(userForm.value.bday),
-  //     };
-  //     this.userService.addUser(newUser);
-  //   }
-  //
-  //   this.router.navigate(['users']);
-  // }
-  // ngOnInit(): void {
-  //   this.route.paramMap.subscribe((params) => {
-  //     let id = params.get('id');
+  formatDate(date: Date): string {
+    // Convert the Date object to a string in 'YYYY-MM-DD' format so that Chrome understands what to do with it
+    return date.toISOString().substring(0, 10);
+  }
 
-  //     if(id) {
-  //       this.isEditting = true;
-  //       this.user = this.userService.getUserById(Number(id));
-  //     } else {
-  //       this.isEditting = false;
-  //       this.user = {
-  //         id: 0,
-  //         name: '',
-  //         email: '',
-  //         bday: new Date(),
-  //       };
-  //     }
-  //   })
-  // }
-
-  // onSubmit(userForm: NgForm): void {
-  //   if(this.isEditting) {
-  //     let editUser = {
-  //       ...userForm.value,
-  //       bday: new Date(userForm.value.bday),
-  //     }
-  //     this.userService.editUser(editUser);
-  //   } else {
-  //     let newUser = {
-  //       id: this.userService.getUsers().length,
-  //       ...userForm.value,
-  //       bday: new Date(userForm.value.bday),
-  //     };
-  //     this.userService.addUser(newUser);
-  //   }
-
-  //   this.router.navigate(['users']);
-  // }
+  onSubmit(userForm: NgForm): void {
+    if (this.user && this.bdayString) {
+      this.user.bday = new Date(this.bdayString);
+      this.userService.updateUser(this.user).subscribe({
+        next: () => this.router.navigate(['users']),
+        error: (err) => {
+          console.error('There was an error!', err);
+        }
+      });
+    } else {
+      console.error('No user was provided.');
+    }
+  }
 }

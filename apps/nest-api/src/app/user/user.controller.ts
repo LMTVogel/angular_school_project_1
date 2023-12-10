@@ -20,18 +20,9 @@ export class UserController {
         return this.userService.getUserById(userId);
     }
 
-
-    @Put(':userId')
-    async updateUser(
-        @Body() userChanges: UserModel,
-        @InjectToken() token: Token
-    ): Promise<UserModel> {
-        const user = await this.userService.getUserById(token.id);
-        if (user.id === user.id) {
-            return this.userService.updateUser(userChanges);
-        } else {
-            throw new HttpException('Not authorized to update user!', HttpStatus.UNAUTHORIZED);
-        }
+    @Put()
+    async updateUser(@Body() userChanges: UserModel): Promise<UserModel> {
+        return this.userService.updateUser(userChanges);
     }
 
     @Delete()
