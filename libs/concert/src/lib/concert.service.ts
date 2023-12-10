@@ -11,8 +11,8 @@ export class ConcertService {
   private concertUrl = 'https://angularschoolproject1-production.up.railway.app/api/concerts';
   // private concertUrl = 'http://localhost:3333/api/concerts';
 
-  // private ticketUrl = 'https://angularschoolproject1-production.up.railway.app/api/tickets';
-  private ticketUrl = 'http://localhost:3333/api/tickets';
+  private ticketUrl = 'https://angularschoolproject1-production.up.railway.app/api/tickets';
+  // private ticketUrl = 'http://localhost:3333/api/tickets';
 
   constructor(private httpClient: HttpClient) { }
 
