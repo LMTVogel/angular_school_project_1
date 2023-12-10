@@ -9,8 +9,8 @@ import { AuthService } from "@angular-concert-project/auth-ui";
   providedIn: 'root'
 })
 export class UserService {
-  private url = 'https://angularschoolproject1-production.up.railway.app/api/users';
-  // private url = 'http://localhost:3333/api/users';
+  // private url = 'https://angularschoolproject1-production.up.railway.app/api/users';
+  private url = 'http://localhost:3333/api/users';
 
   constructor(private httpClient: HttpClient, private authService: AuthService) { }
 
