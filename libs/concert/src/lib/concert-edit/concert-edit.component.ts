@@ -20,23 +20,23 @@ export class ConcertEditComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      const id = params.get('id');
-
-      if(id) {
-        this.isEditing = true;
-        this.concert = this.concertService.getConcertById(Number(id));
-      } else {
-        this.isEditing = false;
-        this.concert = {
-          id: 0,
-          name: '',
-          startDate: new Date(),
-          maxTickets: 0,
-          minimumAge: 0,
-        };
-      }
-    })
+    // this.route.paramMap.subscribe((params) => {
+    //   const id = params.get('id');
+    //
+    //   if(id) {
+    //     this.isEditing = true;
+    //     this.concert = this.concertService.getConcertById(Number(id));
+    //   } else {
+    //     this.isEditing = false;
+    //     this.concert = {
+    //       id: 0,
+    //       name: '',
+    //       startDate: new Date(),
+    //       maxTickets: 0,
+    //       minimumAge: 0,
+    //     };
+    //   }
+    // })
   }
 
   onSubmit(concertForm: NgForm): void {
