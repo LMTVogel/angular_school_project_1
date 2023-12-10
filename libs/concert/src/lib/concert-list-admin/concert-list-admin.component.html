@@ -20,11 +20,11 @@
                     <td>{{concert.name}}</td>
                     <td>{{concert.startDate.toLocaleDateString()}}</td>
                     <td>{{concert.minimumAge}}</td>
-                    <td>
+                  <td>
                         <button class="btn btn-info" [routerLink]="['/concerts', concert.id]">Details</button>
                     </td>
                     <td>
-                        <button class="btn btn-warning" [routerLink]="['/concerts', concert.id, 'edit']">Edit</button>
+                        <button class="btn btn-warning" [routerLink]="['/concerts-admin', concert.id, 'edit']">Edit</button>
                     </td>
                     <td>
                         <button (click)="deleteConcert(concert.id)" class="btn btn-danger">Delete</button>
