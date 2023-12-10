@@ -16,7 +16,7 @@ export interface Artist {
 }
 
 export interface Concert {
-  id: number;
+  id: string;
   name: string;
   startDate: Date;
   maxTickets: number;

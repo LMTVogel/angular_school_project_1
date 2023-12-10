@@ -76,8 +76,7 @@ export class ConcertService {
     // this.concerts[concertToEdit] = concert;
   }
 
-  deleteConcert(id: number): void {
-    // let concertToDelete = this.concerts.findIndex((concert) => concert.id === id);
-    // this.concerts.splice(concertToDelete, 1);
+  deleteConcert(id: string): Observable<any> {
+    return this.httpClient.delete(this.url + '/' + id);
   }
 }
