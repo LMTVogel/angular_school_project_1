@@ -13,10 +13,20 @@ export class ConcertListComponent implements OnInit {
   constructor(private concertService: ConcertService) { }
 
   ngOnInit(): void {
-    this.concerts = this.concertService.getConcerts();
+    this.loadConcerts();
   }
 
-  deleteConcert(id: number): void {
-    this.concertService.deleteConcert(id);
+  loadConcerts(): void {
+    this.concertService.getAllConcerts().subscribe(concerts => this.concerts = concerts);
+  }
+
+  deleteConcert(id: string): void {
+    if (confirm("Are you sure you want to delete this concert?")) {
+      this.concertService.deleteConcert(id).subscribe(() => {
+        this.loadConcerts();
+      }, error => {
+        console.error('Error deleting concert', error);
+      });
+    }
   }
 }

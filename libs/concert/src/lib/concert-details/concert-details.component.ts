@@ -15,8 +15,16 @@ export class ConcertDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
-      this.concert = this.concertService.getConcertById(Number(params.get('id')));
-    })
+      const concertId = params.get('id');
+
+      if (concertId) {
+        this.concertService.getConcertById(concertId).subscribe((concert: Concert) => {
+          this.concert = concert;
+        });
+      } else {
+        console.error('No concert ID was provided.')
+      }
+    });
   }
 
 }

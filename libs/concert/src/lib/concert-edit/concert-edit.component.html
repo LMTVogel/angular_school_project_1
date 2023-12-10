@@ -1,26 +1,69 @@
-<h1 *ngIf="!isEditting" class="mt-5">Concert aanmaken</h1>
-<h1 *ngIf="isEditting" class="mt-5">Concert aanpassen</h1>
+<h1 *ngIf="!isEditing" class="mt-5">Concert aanmaken</h1>
+<h1 *ngIf="isEditing" class="mt-5">Concert aanpassen</h1>
 
-<form #concertForm="ngForm" (ngSubmit)="concertForm.form.valid && onSubmit(concertForm)">
-    <input *ngIf="isEditting" type="hidden" id="id" name="id" [(ngModel)]="concert!.id">
-    <div class="mb-3">
-        <label for="name" class="form-label">Naam</label>
-        <input #name="ngModel" 
-            [(ngModel)]="concert!.name" required type="text" class="form-control" id="name" name="name" aria-describedby="nameHelp">
+<form [formGroup]="concertForm" (ngSubmit)="onSubmit()">
+
+  <!-- Hidden ID Field for Editing -->
+  <input *ngIf="isEditing" type="hidden" formControlName="id">
+
+  <!-- Concert Details Grouping -->
+  <div class="mb-3">
+    <h4>Concert details</h4>
+    <label for="name" class="form-label">Naam</label>
+    <input formControlName="name" required type="text" class="form-control" id="name">
+
+    <label for="description" class="form-label">Beschrijving</label>
+    <textarea formControlName="description" required class="form-control" id="description"></textarea>
+
+    <label for="startDate" class="form-label">Startdatum</label>
+    <input formControlName="startDate" required type="date" class="form-control" id="startDate">
+
+    <label for="maxTickets" class="form-label">Max. aantal tickets</label>
+    <input formControlName="maxTickets" required type="number" class="form-control" id="maxTickets">
+
+    <label for="minimumAge" class="form-label">Minimum leeftijd</label>
+    <input formControlName="minimumAge" required type="number" class="form-control" id="minimumAge">
+  </div>
+
+  <div formArrayName="artists" class="mb-3">
+    <h4>Artiesten</h4>
+    <div *ngFor="let artistGroup of artists.controls; let i = index" [formGroupName]="i">
+      <div class="form-group">
+        <label for="artistName-{{i}}">Naam artiest</label>
+        <input formControlName="name" type="text" class="form-control" id="artistName-{{i}}">
+
+        <!-- Nested group for band -->
+        <div formGroupName="band">
+          <label for="bandName-{{i}}">Naam band</label>
+          <input formControlName="name" type="text" class="form-control" id="bandName-{{i}}">
+        </div>
+
+        <button type="button" (click)="removeArtist(i)">Artiest verwijderen</button>
+      </div>
     </div>
-    <div class="mb-3">
-        <label for="startDate" class="form-label">Startdatum</label>
-        <input (ngModel)="concert!.startDate" 
-            [ngModel]="concert!.startDate | date: 'MM/dd/yyyy'" 
-            required type="text" class="form-control" id="startDate" name="startDate" aria-describedby="startDateHelp">
-    </div>
-    <div class="mb-3">
-        <label for="maxTickets" class="form-label">Max. aantal tickets</label>
-        <input [(ngModel)]="concert!.maxTickets" required type="number" class="form-control" id="maxTickets" name="maxTickets" aria-describedby="maxTicketsHelp">
-    </div>
-    <div class="mb-3">
-        <label for="minimumAge" class="form-label">Minimum leeftijd</label>
-        <input [(ngModel)]="concert!.minimumAge" required type="number" class="form-control" id="minimumAge" name="minimumAge" aria-describedby="minimumAgeHelp">
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="button" (click)="addArtist()">Artiest toevoegen</button>
+  </div>
+
+  <!-- Location Details -->
+  <div class="mb-3" formGroupName="location">
+    <h4>Locatie</h4>
+
+    <label for="locationName" class="form-label">Locatienaam</label>
+    <input formControlName="name" type="text" class="form-control" id="locationName">
+
+    <label for="streetAddress" class="form-label">Straatnaam</label>
+    <input formControlName="streetAddress" type="text" class="form-control" id="streetAddress">
+
+    <label for="zipCode" class="form-label">Postcode</label>
+    <input formControlName="zipCode" type="text" class="form-control" id="zipCode">
+
+    <label for="city" class="form-label">Stad</label>
+    <input formControlName="city" type="text" class="form-control" id="city">
+
+    <label for="country" class="form-label">Land</label>
+    <input formControlName="country" type="text" class="form-control" id="country">
+  </div>
+
+  <!-- Submit Button -->
+  <button type="submit" class="btn btn-primary">Concert opslaan</button>
 </form>
