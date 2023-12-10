@@ -11,7 +11,7 @@ import { Concert, ConcertService } from '@angular-concert-project/concert';
 })
 export class ConcertEditComponent implements OnInit {
   concert: Concert | undefined = undefined;
-  isEditting: boolean = false;
+  isEditing = false;
 
   constructor(
     private concertService: ConcertService,
@@ -21,13 +21,13 @@ export class ConcertEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
-      let id = params.get('id');
+      const id = params.get('id');
 
       if(id) {
-        this.isEditting = true;
+        this.isEditing = true;
         this.concert = this.concertService.getConcertById(Number(id));
       } else {
-        this.isEditting = false;
+        this.isEditing = false;
         this.concert = {
           id: 0,
           name: '',
@@ -40,15 +40,14 @@ export class ConcertEditComponent implements OnInit {
   }
 
   onSubmit(concertForm: NgForm): void {
-    if(this.isEditting) {
-      let editConcert = {
+    if(this.isEditing) {
+      const editConcert = {
         ...concertForm.value,
         startDate: new Date(concertForm.value.startDate),
       }
       this.concertService.editConcert(editConcert);
     } else {
-      let newConcert = {
-        id: this.concertService.getConcerts().length,
+      const newConcert = {
         ...concertForm.value,
         startDate: new Date(concertForm.value.startDate),
       };

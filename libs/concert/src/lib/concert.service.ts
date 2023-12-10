@@ -2,11 +2,16 @@ import { DEFAULT_INTERPOLATION_CONFIG } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 
 import { Concert } from '@angular-concert-project/concert';
+import {map, Observable} from "rxjs";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConcertService {
+  private url = 'https://angularschoolproject1-production.up.railway.app/api/concerts';
+  // private url = 'http://localhost:3333/api/concerts';
+
   concerts: Concert[] = [
     { id: 0,
       name: 'Queen + Adam Lambert',
@@ -40,10 +45,16 @@ export class ConcertService {
     },
   ];
 
-  constructor() { }
+  constructor(private httpClient: HttpClient) { }
 
-  getConcerts(): Concert[] {
-    return this.concerts;
+  getAllConcerts(): Observable<Concert[]> {
+    return this.httpClient.get<Concert[]>(this.url).pipe(
+      map(concerts => concerts.map(concert => ({
+        ...concert,
+        // Convert the startDate string to a Date object
+        startDate: new Date(concert.startDate)
+      })))
+    );
   }
 
   getConcertById(id: number): Concert {

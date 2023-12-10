@@ -13,7 +13,11 @@ export class ConcertListComponent implements OnInit {
   constructor(private concertService: ConcertService) { }
 
   ngOnInit(): void {
-    this.concerts = this.concertService.getConcerts();
+    this.loadConcerts();
+  }
+
+  loadConcerts(): void {
+    this.concertService.getAllConcerts().subscribe(concerts => this.concerts = concerts);
   }
 
   deleteConcert(id: number): void {
