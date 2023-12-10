@@ -4,6 +4,7 @@ import { RegisterComponent } from './register/register.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { NotAuthorizedComponent } from "./not-authorized/not-authorized.component";
 
 @NgModule({
   imports: [
@@ -13,6 +14,6 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  declarations: [RegisterComponent],
+  declarations: [RegisterComponent, NotAuthorizedComponent],
 })
 export class AuthUiModule {}

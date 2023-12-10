@@ -71,13 +71,14 @@ export class AuthService {
   logOut(): boolean {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    localStorage.removeItem('isAdmin');
 
     return false;
   }
 
-  getLoggedInUser(): Observable<User> {
-    console.log('get logged in user');
-
-    return this.httpClient.get<User>(this.url + "/info");
-  }
+  // getLoggedInUser(): Observable<User> {
+  //   console.log('get logged in user');
+  //
+  //   return this.httpClient.get<User>(this.url + "/info");
+  // }
 }

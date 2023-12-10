@@ -14,6 +14,12 @@ export class UserController {
         return this.userService.getAll();
     }
 
+    @Get('isUserAdmin')
+    async isUserAdmin(@InjectToken() token: Token): Promise<UserModel> {
+        console.log('admin check is triggered: ' + token.id);
+        return this.userService.getUserById(token.id);
+    }
+
     @UseGuards(AdminGuard)
     @Get(':userId')
     async getUserById(@Param("userId") userId: string): Promise<UserModel> {
@@ -36,4 +42,6 @@ export class UserController {
         const user = await this.userService.getUserById(id);
         return this.userService.deleteUser(user.id, user.email);
     }
+
+
 }

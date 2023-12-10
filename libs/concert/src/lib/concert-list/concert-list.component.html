@@ -1,36 +1,25 @@
-<div class="row mt-1">
-    <div class="col-8">
-        <h1>Concerten</h1>
-        <a class="btn btn-primary" routerLink="new">Nieuw concert</a>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Naam</th>
-                    <th scope="col">Startdatum</th>
-                    <th scope="col">Min. leeftijd</th>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let concert of concerts; let i = index">
-                    <th scope="row">{{i + 1}}</th>
-                    <td>{{concert.name}}</td>
-                    <td>{{concert.startDate.toLocaleDateString()}}</td>
-                    <td>{{concert.minimumAge}}</td>
-                    <td>
-                        <button class="btn btn-info" [routerLink]="['/concerts', concert.id]">Details</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-warning" [routerLink]="['/concerts', concert.id, 'edit']">Edit</button>
-                    </td>
-                    <td>
-                        <button (click)="deleteConcert(concert.id)" class="btn btn-danger">Delete</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+<div class="banner" style="height: 300px; background-image: url('../assets/concert.jpg'); background-size: cover; background-position: center;">
+</div>
+
+<div class="container mt-1">
+  <div class="row">
+    <div class="col-12">
+      <h1>Concerten</h1>
     </div>
+  </div>
+  <div class="row row-cols-1 row-cols-md-4 g-4">
+    <div class="col" *ngFor="let concert of concerts; let i = index">
+      <div class="card h-100" style="cursor: pointer" [routerLink]="['/concerts', concert.id]">
+        <div class="card-body">
+          <h5 class="card-title">{{ concert.name }}</h5>
+          <p class="card-text">
+            Startdatum: {{ concert.startDate | date:'mediumDate' }}
+          </p>
+        </div>
+        <div class="card-footer">
+          <small class="text-muted">Min. leeftijd: {{ concert.minimumAge }}</small>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
