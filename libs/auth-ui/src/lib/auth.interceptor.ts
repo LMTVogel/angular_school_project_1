@@ -9,12 +9,17 @@ export class AuthInterceptor implements HttpInterceptor {
 
   private whitelist = [
     '/login',
-    '/concerts-overview',
     '/about',
   ];
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     console.log('AuthInterceptor: ' + req.url)
+
+    if (req.method === 'GET' && req.url.endsWith('/concerts')) {
+      console.log('AuthInterceptor: Whitelisted URL for GET /concerts, no token needed.');
+      return next.handle(req);
+    }
+
     // Check if the request is whitelisted for not needing a token.
     if (this.whitelist.some(url => req.url.includes(url))) {
       console.log('AuthInterceptor: Whitelisted URL, no token needed.')
