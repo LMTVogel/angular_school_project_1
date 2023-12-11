@@ -2,7 +2,6 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http"
 import { catchError, Observable, of, BehaviorSubject } from "rxjs";
 import { UserCredentials } from "./auth.interface";
-import {User} from "@angular-concert-project/user";
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +33,7 @@ export class AuthService {
     return this.httpClient.post<string>(this.url + '/login', user);
   }
 
+  // TODO: delete this
   constructHeader() {
     let token;
 
@@ -48,6 +48,7 @@ export class AuthService {
       Authorization: `${token}`,
     });
   }
+  // TODO: delete this
   register(userToCreate: UserCredentials): Observable<UserCredentials> {
     console.log('register user');
 
@@ -76,6 +77,7 @@ export class AuthService {
     return false;
   }
 
+  // TODO: delete this
   // getLoggedInUser(): Observable<User> {
   //   console.log('get logged in user');
   //
