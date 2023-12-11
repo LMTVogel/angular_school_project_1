@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
     };
   }
 
+  // TODO: alles snappen
   onSubmit(): void {
     console.log('Login form submitted');
     this.authService.login(this.user).subscribe({
@@ -34,6 +35,15 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('token', JSON.stringify(result.token));
 
           this.authService.updateAuthStatus();
+
+          this.userService.checkAdminStatus().subscribe({
+            next: (isAdmin) => {
+            },
+            error: (error) => {
+              console.error('Failed to fetch admin status: ', error);
+            }
+          });
+
           this.router.navigate(['']);
         } else {
           console.log(result.error);
